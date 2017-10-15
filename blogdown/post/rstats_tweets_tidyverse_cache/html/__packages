@@ -1,0 +1,15 @@
+base
+twitteR
+config
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+bindrcpp
+tidytext
+ggjoy
+RColorBrewer
+wordcloud

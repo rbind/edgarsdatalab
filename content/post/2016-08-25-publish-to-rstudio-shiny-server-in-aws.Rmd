@@ -1,98 +1,124 @@
 ---
-title: "Shiny Server in AWS"
+title: "Setup a Shiny Server in AWS"
 date: 2016-08-25
-categories: ["R"]
-tags: ["Shiny", "AWS", "EC2"]
+slug: ''
+tags: 
+  - R
+  - Shiny Server
+  - RStudio Server
+  - EC2
+  - AWS
+categories:
+  - R Admins
+  - How-to guide
+  - Server setup
+summary: "A step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier."
 ---
 
-## AWS/EC2 Setup
+The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:
+
+1. Setup a server, or EC2 instance, in AWS
+1. Install R, Shiny Server and RStudio Server
+1. Pre-install dependencies packages
+1. Publish a test app
+
+## Setup the EC2 Instances (Servers) in AWS
+
+The purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.  Please feel free to skip, or skim, if you are already familiar with the process. 
 
 1. **Amazon Machine Instance:** Ubuntu
 1. **Instance Type:** m4.large
-1. No changes
 1. **Storage:** 30 Size GiB
-1. No changes
-1. Security Group Name: Shiny 
-  - Click Add Rule, select Type: All Trafic | Source: My IPOptional: If you want to open your Shiny server to the world – Click Add Rule, select Type: Custom TCP Rule | Port Range: 3838 |Source: Anywhere
-  - Optional: If you plan to have to publish apps from a RStudio server within the local network (VPC) – Click Add Rule, select Type: All Traffic | Source: Custom and type the the first two numbers in the IP address followed by ‘.0.0/16’ (So,if your Shiny server’s internal IP address is 172.31.2.200 then you’d enter 172.31.0.0/16 This gives every server in your VPC access to your Shiny server and to each other)
-1. After clicking Launch the “Select existing pair or create a new pair” screen will appear, select:Create a new pairKey pair name: shiny
-1. Click Download Key Pair
+1. **Security Group Name:** Shiny 
+1. Click **Add Rule**, select **Type:** All Trafic, **Source:** My IP
+1. *Optional: If you want to open your Shiny server to the world:* Click **Add Rule**, select **Type:** Custom TCP Rule, **Port Range:** 3838, **Source:** Anywhere
+1. *Optional: If you plan to have to publish apps from a RStudio server within your "local" AWS network (VPC):* Click **Add Rule**, select **Type:** All Traffic, **Source:** Custom and type the the first two numbers in the IP address followed by ‘.0.0/16’ (e.g.: If the Shiny server’s AWS internal IP address is 172.31.2.200 then you’d enter 172.31.0.0/16 This gives every server in your VPC access to your Shiny server and to each other). See [Publish to a Shiny Server](/2016/08/25/publish-to-a-shiny-server/) after completing this guide
+1. After clicking **Launch**, the “Select existing pair or create a new pair” screen will appear, select: **Create a new pairKey pair name**, and name it **shiny**
+1. Click **Download Key Pair**
 1. Save the file 
-1. Click Launch Instances
+1. Click **Launch Instances**
 1. Go to the Instances section in the EC2 Dashboard section and click on the new instance
-1. Copy the Public DNS address, from here on we’ll refer to it as MY_PUBLIC_DNS
+1. Copy the *Public DNS address*, from here on we’ll refer to it as *MY_PUBLIC_DNS*
 
 ### Connecting to the Server
 
-AWS provides the step-by-step instructions for this part:
+The Ubuntu Server installation does not have a GUI that the Destktop version provides. This means that the only way to make changes to the server is by starting a Terminal (black screen) session  with the EC2 server. AWS provides the step-by-step instructions for this part:
 
-**Windows** – http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.htmlComplete sections Converting Your Private Key Using PuTTYgen and Starting a PuTTY Session
+**Windows** – http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html. Complete sections *Converting Your Private Key Using PuTTYgen* and *Starting a PuTTY Session*
 
-**Non-Windows** – http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.htmlOnly go through the instructions in the To connect to your instance using SSH section
+**Non-Windows** – http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html. Only go through the instructions in the To connect to your instance using SSH section
 Shiny server configuration
 
 ## Install R
 
-We need to update the package list so that Ubuntu installs the latest R version. Here is the reference: https://cran.r-project.org/bin/linux/ubuntu/
-
 **Tip: ** The terminal commands inside the boxes can be copied and pasted into your terminal session. In putty you can use right-click as the “paste” command.
 
+- Ubuntu defaults to an older version of R. Update the Linux package list so that Ubuntu installs the latest R version. For more info see: https://cran.r-project.org/bin/linux/ubuntu/
 ```bash
 sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list'
 gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
 gpg -a --export E084DAB9 | sudo apt-key add -
 sudo apt-get update
+```
+- Install R
+```bash
 sudo apt-get install r-base
 ```
 
 ## Install Shiny
 
-The steps below install the current version. To find updated instructions navigate to: https://www.rstudio.com/products/shiny/download-server/ and select Ubuntu 12.04 or later
+The instructions below install the current version of Shiny Server. To find updated instructions navigate to: https://www.rstudio.com/products/shiny/download-server/ and select Ubuntu 12.04 or later
 
 ```bash
 sudo su - -c "R -e \"install.packages('shiny', repos='https://cran.rstudio.com/')\""
 sudo apt-get install gdebi-core
-wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.4.4.801-amd64.deb
-sudo gdebi shiny-server-1.4.4.801-amd64.deb
+wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.5.872-amd64.deb
+sudo gdebi shiny-server-1.5.5.872-amd64.deb
 
 ```
 ## Install RStudio
 
-**Why install RStudio Server along the Shiny Server?** RStudio will be used to upload the app and its dependencies. It will also allow testing of the app inside the RStudio IDE. This removes the need to setup complicated security and FTP.
+**Why install RStudio Server along Shiny Server?**  The RStudio Server provides a web browser-based interface that looks just like the local RStudio Desktop. In this case, the RStudio Server will be used to upload the app and its dependencies. It will also allow testing of the app inside the RStudio IDE. This removes the need to setup complicated security and FTP. To find updated instructions navigate to: https://www.rstudio.com/products/rstudio/download-server/ and select **Debian/Ubuntu**
 
-The steps below install the current version. To find updated instructions navigate to: https://www.rstudio.com/products/rstudio/download-server/ and select **Debian/Ubuntu**
 ```bash
-wget https://download2.rstudio.org/rstudio-server-0.99.903-amd64.deb
-sudo gdebi rstudio-server-0.99.903-amd64.deb
+wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+sudo gdebi rstudio-server-1.1.383-amd64.deb
 ```
-We need to add a default user that can log on RStudio. I’m going to use ‘rstudio’ as the name but it can be whatever you’d like. The second command give the user ‘sudo’ (read Admin) access to the server. The third line is key, it makes it where you don’t have to type ‘sudo’ before any file/folder command. This command makes it possible for RStudio to create new folders and files in the Shiny server.
 
+## Setup an admin user
+
+A new Linux user needs to be setup that can logon to RStudio Server and also has sufficient rights to save to the Shiny Server's apps folder.
+
+- Create a default user that can log on RStudio. I’m going to use ‘rstudio’ as the name but it can be whatever you’d like.
 ```bash
 sudo adduser rstudio
+## Select and type a password 
+```
+- Give the new user ‘sudo’ (read Admin) access to the server.
+```bash
 sudo usermod -aG sudo rstudio
+```
+- This command is key, it makes it where you don’t have to type ‘sudo’ before any file/folder command. This command makes it possible for RStudio to create new folders and files in the Shiny Server apps folder    
+```bash
 sudo chown rstudio /srv/shiny-server/
-## select and type a password
 ```
 
-## Pre-install R packages
+## Pre-install  packages
 
-Any package that an ‘Shiny App’ uses will need to be pre-installed, or the will crash. Here are a few we will load before we start using the server. If you need any other package, just follow the instruction pattern, replacing the name of the desired package.
+Some popular R packages depend on Linux packages that are usually not installed by default.  Install the following Linux packages:
+```bash
+sudo apt-get -y install libcurl4-gnutls-dev
+sudo apt-get -y install libssl-dev
+sudo apt-get -y install libxml2-dev
+```
 
-You can always install more packages later via a terminal session
+Any package that a ‘Shiny App’ uses will need to be pre-installed, or the app will crash. Here are a few we will load before we start using the server. If you need any other package, just follow the instruction pattern, replacing the name of the desired package. You can always install more packages later via a terminal session
 
 ```bash
-sudo su - -c "R -e \"install.packages('rmarkdown', repos='http://cran.us.r-project.org')\""
 sudo su - -c "R -e \"install.packages('tidyverse', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('compat-gmp4', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('compat-libffi5', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('stats', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('plyr', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('maps', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('stringr', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('ggExtra', repos='http://cran.us.r-project.org')\""
-sudo su - -c "R -e \"install.packages('ggthemes', repos='http://cran.us.r-project.org')\""
 sudo su - -c "R -e \"install.packages('stats', repos='http://cran.us.r-project.org')\""
 sudo su - -c "R -e \"install.packages('flexdashboard', repos='http://cran.us.r-project.org')\""
+sudo su - -c "R -e \"install.packages('shinydashboard', repos='http://cran.us.r-project.org')\""
 ```
 
 ### Test server connnectivity
@@ -114,74 +140,3 @@ To confirm the RStudio server is working go to: http://MY_PUBLIC_DNS:8787/
 1. Type the following (exactly as is in here): /srv/shiny-server/
 1. Click Choose and then click Create
 1. Navigate to your new app by going to: http://MY_PUBLIC_DNS:3838/my_test
-
-### Publishing from an RStudio server in the local network
-
-The following method sets up a single user in the RStudio server to have ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the Shiny server shiny-server folder. In order for RStudio to create folders and files, a specific user needs to logged on in the RStudio server. This is why we are not putting the ‘shiny-server’ mount point in a more generic location. For purposes of this document, I’ll use shiny-user as the user.
-
-The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
-
-Make sure to perform the second optional security setting in the ‘AWS/EC2 Setup’ section
-
-The plan is to:
-
-1. Create a user in the Shiny and RStudio server with the same name and password
-1. Install and configure the Samba server in the Shiny server
-1. Install and configure the Samba client in the RStudio server
-1. Point the ‘shiny-server’ folder to a local folder in the RStudio server’s user
-
-In the Shiny server
-
-- Open a new terminal session in the Shiny Server
-- We’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command
-```bash
-sudo adduser shiny-user
-sudo usermod -aG sudo shiny-user
-sudo chown shiny-user /srv/shiny-server/
-sudo chgrp sudo /srv/shiny-server/
-```
-Installing and configuring Samba
-```bash
-sudo apt-get install samba
-sudo smbpasswd -a shiny-user [typed password twice]
-sudo nano /etc/samba/smb.conf
-```
-- Add the following lines at the end of the file:
-```bash
-[shiny-server]
-comment = Shiny Server Share
-path=/srv/shiny-server/
-browsable = yes
-valid users = shiny-user
-read only = no
-```
-- Close the file by typing CRTL+X, then Y and enter
-- Restarting the Samba server
-```bash
-sudo service smbd restart
-```
-- In the RStudio server
-- Start a terminal session in the ‘client’ RStudio Server
-- Create the new user
-```bash
-sudo adduser shiny-user
-```
-- In a web browser, navigate to the RStudio server and log on as ‘shiny-user’
-- Create a folder called shiny-server
-- Switch back to the terminal session in the RStudio server
-- We’ll install and configure the Samba client
-```bash
-sudo apt-get install cifs-utils
-sudo nano /etc/fstab
-```
-- Add the following lines at the end of the file:
-```bash
-//[ Shiny server's Internal IP Address]/shiny-server  /home/shiny-user/shiny-server  cifs  username=shiny-user,password=shiny-user
-```
-- Close the file by typing CRTL+X, then Y and enter
-- ‘Mount’ the share, which means that the internal folder now points to the folder in the external Shiny server
-sudo mount -a
-- Go back to the web browser that has the RStudio session
-- Click on the ‘shiny-server’ folder
-- To confirm that the permissions are correct, create a new Shiny app, called server_test in the shiny-server folder
-- Navigate to your new app by going to: http://MY_PUBLIC_DNS:3838/server_test

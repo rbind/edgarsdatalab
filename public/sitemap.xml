@@ -3,22 +3,44 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2017/09/04/sentiment-analysis-using-tidytext/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2016/08/25/publish-to-a-shiny-server/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2016/08/25/shiny-server-in-aws/</loc>
+    <loc>/2016/08/25/setup-a-shiny-server-in-aws/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
-    <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+    <loc>/2016/08/25/infographic-16-years-of-banking-dataand-beyond/</loc>
+    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2016/08/24/5-things-i-learned-from-open-banking-data/</loc>
+    <lastmod>2016-08-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/arima/</loc>
+    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/aws/</loc>
+    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/banking/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -29,19 +51,61 @@
   </url>
   
   <url>
+    <loc>/categories/data-analysis/</loc>
+    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/ec2/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggjoy/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/how-to-guide/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
+    <loc>/post/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/r-admins/</loc>
+    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rstudio-server/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -53,7 +117,13 @@
   </url>
   
   <url>
-    <loc>/tags/shiny/</loc>
+    <loc>/tags/sentiment/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/server-setup/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -71,7 +141,31 @@
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>/tags/tidytext/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tidyverse/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/twitter/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ubuntu/</loc>
+    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/visualization/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

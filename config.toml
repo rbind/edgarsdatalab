@@ -1,6 +1,6 @@
 baseurl = "/"
 languageCode = "en-us"
-title = "edgarsdatalab"
+title = "Edgar's Data Lab"
 theme = "hugo_theme_beg"
 features = ["responsive", "thumbnail", "syntax highlight", "structured data", "ogp", "twitter cards"]
 googleAnalytics = ""
@@ -10,15 +10,17 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [permalinks]
     post = "/:year/:month/:day/:slug/"
 
-[[menu.main]]
-    name = "About"
-    url = "/about/"
+
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/rstudio/blogdown"
+    url = "https://github.com/edgararuiz/"
+[[menu.main]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/edgararuiz/"
 [[menu.main]]
     name = "Twitter"
-    url = "https://twitter.com/rstudio"
+    url = "https://twitter.com/theotheredgar/"
+
 
 [params]
     description = "A website built through Hugo and blogdown."

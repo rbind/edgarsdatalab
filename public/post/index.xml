@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on edgarsdatalab</title>
+    <title>Posts on Edgar&#39;s Data Lab</title>
     <link>/post/</link>
-    <description>Recent content in Posts on edgarsdatalab</description>
+    <description>Recent content in Posts on Edgar&#39;s Data Lab</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sentiment analysis using tidytext</title>
+      <link>/2017/09/04/sentiment-analysis-using-tidytext/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/04/sentiment-analysis-using-tidytext/</guid>
+      <description>Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.
+The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.
+Twitter data importThe twitterR package opens the Twitter API to R users.</description>
+    </item>
     
     <item>
       <title>Publish to a Shiny Server</title>
@@ -23,12 +34,37 @@ Create a user in the Shiny and RStudio server with the same name and passwordIn
     </item>
     
     <item>
-      <title>Shiny Server in AWS</title>
-      <link>/2016/08/25/shiny-server-in-aws/</link>
+      <title>Setup a Shiny Server in AWS</title>
+      <link>/2016/08/25/setup-a-shiny-server-in-aws/</link>
       <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/08/25/shiny-server-in-aws/</guid>
-      <description>AWS/EC2 SetupAmazon Machine Instance: UbuntuInstance Type: m4.largeNo changesStorage: 30 Size GiBNo changesSecurity Group Name: ShinyClick Add Rule, select Type: All Trafic | Source: My IPOptional: If you want to open your Shiny server to the world – Click Add Rule, select Type: Custom TCP Rule | Port Range: 3838 |Source: AnywhereOptional: If you plan to have to publish apps from a RStudio server within the local network (VPC) – Click Add Rule, select Type: All Traffic | Source: Custom and type the the first two numbers in the IP address followed by ‘.</description>
+      <guid>/2016/08/25/setup-a-shiny-server-in-aws/</guid>
+      <description>The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:
+Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.</description>
+    </item>
+    
+    <item>
+      <title>[Infographic] 16 years of Banking Data…and beyond</title>
+      <link>/2016/08/25/infographic-16-years-of-banking-dataand-beyond/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/08/25/infographic-16-years-of-banking-dataand-beyond/</guid>
+      <description>Originaly published on LinkedIn, March 6 2016
+ For the full size version click here
+The Data – 1.5 million rows across 16 files were brought into the analysis. Each file contained a specific year and each row a specific branch.
+The Math – For the forecasting, the model methodology used was ARIMA (Autoregressive Integrated Moving Average). This kind of model works well for time series analysis. To see the full R Markup report describing how each model was chosen click here.</description>
+    </item>
+    
+    <item>
+      <title>5 things I learned from open banking data</title>
+      <link>/2016/08/24/5-things-i-learned-from-open-banking-data/</link>
+      <pubDate>Wed, 24 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/08/24/5-things-i-learned-from-open-banking-data/</guid>
+      <description>Original published on LinkedIn, February 10 2016
+Banks and other financial institutions submit to the FDIC a report of all of the money held for deposit at each of their branches. A compilation of the reports from each bank is available as a single dataset on the FDIC’s website.
+Here are 5 insights from analyzing the most recent dataset:
+In 2015, $10.6 trillion dollars in total deposits were reported – This was the first eye opener for me; this number is a 1 followed by 13 zeroes.</description>
     </item>
     
   </channel>

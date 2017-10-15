@@ -1,0 +1,264 @@
+---
+title: "Sentiment analysis using tidytext"
+date: 2017-09-04
+slug: ''
+tags: 
+  - R
+  - tidytext
+  - ggplot2
+  - ggjoy
+  - Sentiment
+  - Twitter
+  - twitteR
+  - tidyverse
+summary: "An attempt to learn more about Setiment Analysis and to use the tidytext package."
+thumbnail: post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-14-1.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(cache = FALSE)
+```
+
+## Quick intro
+
+Getting familiar with the new `tidytext` package was  a great weekend project. This example follows the structure of the [Introduction to tidytext](https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html) article by the authors of the package, Julia Silge and David Robinson.
+
+The source of the text for this example are tweets.  More specifically, tweets with the **rstats** hashtag.  This project will also be an attempt to learn something about the community.
+
+
+## Twitter data import
+
+The `twitterR` package opens the Twitter API to R users.  The `config` package is used to prevent placing the credentials in the code.  
+
+Because these tweets were pulled at a specific point in time, anyone recreating this analysis may get different results.
+
+```{r}
+library(twitteR)
+```
+
+```{r}
+token <- config::get()
+setup_twitter_oauth(token$key, token$secret, token$token, token$tsecret)
+```
+
+
+```{r, cache = TRUE}
+tweets <- searchTwitter("#rstats", 10000)
+```
+
+## Tidy data
+
+The `searchTwitter()` function returns a rather complex list object.  Using the packages in the [tidyverse](http://www.tidyverse.org/), the complex list is converted to a tidy table, retweets are removed, and an usable date field is added
+
+
+```{r, include = FALSE}
+library(tidyverse)
+```
+
+```{r, cache = TRUE}
+library(tidyverse)
+
+tidy_tweets <- tibble(
+  screen_name = tweets %>% map_chr(~.x$screenName),
+  tweetid = tweets %>% map_chr(~.x$id),
+  created_timestamp = seq_len(length(tweets)) %>% map_chr(~as.character(tweets[[.x]]$created)),
+  is_retweet = tweets %>% map_chr(~.x$isRetweet),
+  text = tweets %>% map_chr(~.x$text)
+) %>%
+  mutate(created_date = as.Date(created_timestamp)) %>%
+  filter(is_retweet == FALSE,
+         substr(text, 1,2) != "RT")
+
+
+tidy_tweets
+```
+
+
+## tidytext, transform!
+
+### Word tokens
+
+The `unnest_tokens()` command from the `tidytext` package easily transforms the existing tidy table with one row (observation) per tweet, to a table with one row (token) per word inside the tweet.
+
+```{r}
+library(tidytext)
+
+tweet_words <- tidy_tweets %>%
+  select(tweetid,
+         screen_name,
+         text,
+         created_date) %>%
+  unnest_tokens(word, text)
+
+tweet_words
+```
+
+
+### Stop words
+
+The `stop_words` table is part of `tidytext`, it contains common words that can be used to discard from an analysis.  This is the kind of list that analysts usually have to find online and then clean up manually. 
+
+```{r}
+stop_words  
+```
+
+An small custom stop words list is put together to reduce the noise caused by terms common in tweets.
+
+```{r}
+my_stop_words <- tibble(
+  word = c(
+    "https",
+    "t.co",
+    "rt",
+    "amp",
+    "rstats",
+    "gt"
+  ),
+  lexicon = "twitter"
+)
+```
+
+The combined list of stop words are then used to remove such words from the words in the tweets.  An additional filter is added to remove words that are numbers.
+
+```{r}
+all_stop_words <- stop_words %>%
+  bind_rows(my_stop_words)
+
+suppressWarnings({
+  no_numbers <- tweet_words %>%
+    filter(is.na(as.numeric(word)))
+})
+
+no_stop_words <- no_numbers %>%
+  anti_join(all_stop_words, by = "word")
+
+tibble(
+  total_words = nrow(tweet_words),
+  after_cleanup = nrow(no_stop_words)
+)
+```
+
+More than half of the words in the tweets are considered stop words.  Here is a quick look of the words that are currently at the top, based on occurrence:
+
+```{r}
+top_words <- no_stop_words %>%
+  group_by(word) %>%
+  tally %>%
+  arrange(desc(n)) %>%
+  head(10)
+
+top_words
+
+```
+
+### Sentiment matching
+
+The `get_sentiments()` functions in `tidytext` makes it really easy to match words against different lexicons (vocabularies). The NRC lexicon was chosen for this analysis.  The `get_sentiments()` function returns a data frame, a simple table join makes the lexicon part of the analysis. 
+
+```{r}
+
+nrc_words <- no_stop_words %>%
+  inner_join(get_sentiments("nrc"), by = "word")
+
+nrc_words 
+```
+
+It is worth mentioning that in the NRC lexicon, one word may have multiple sentiments. For example, the word *wait*, has a *negative* and an *anticipation* classification.  From the data joining perspective, this means multiple matches for words that have more than one sentiment. 
+
+```{r}
+nrc_words %>%
+  group_by(sentiment) %>%
+  tally %>%
+  arrange(desc(n))
+```
+
+
+Removing that many words from the analysis may mean that there are tweets that had no words that matched NRC.  A quick count of the unique `tweetid` will provide the answer.  In this case, all the tweets from `tidy_tweets` had at least 1 word that matched NRC list. 
+
+```{r}
+nrc_words %>%
+  group_by(tweetid) %>%
+  tally %>%
+  ungroup %>%
+  count %>%
+  pull
+
+```
+
+## Visualize results
+
+The first visualization is a joyplot using `ggplot2` and the new `ggjoy` extension created by Claus O. Wilke.
+
+```{r, fig.width = 7, fig.height = 5}
+library(ggjoy)
+
+  ggplot(nrc_words) +
+    geom_joy(aes(
+      x = created_date,
+      y = sentiment, 
+      fill = sentiment),
+      rel_min_height = 0.01,
+      alpha = 0.7,
+      scale = 3) +
+    theme_joy() +
+    labs(title = "Twitter #rstats sentiment analysis",
+         x = "Tweet Date",
+         y = "Sentiment") + 
+    scale_fill_discrete(guide=FALSE)
+  
+
+```
+
+### Joyful words
+
+The influence of words classified as "joy" by NRC are analyzed in the `wordcloud()` function inside the `wordcloud` package. The words, **love** and **create** come out one top.
+
+```{r}
+library(RColorBrewer)
+library(wordcloud)
+
+
+set.seed(10)
+
+joy_words <- nrc_words %>%
+  filter(sentiment == "joy") %>%
+  group_by(word) %>%
+  tally
+
+
+joy_words %>%
+  with(wordcloud(word, n, max.words = 50, colors =  c("#56B4E9", "#E69F00")))
+
+```
+
+Because a tweet is short, it made sense to find out what words surround joyful words.  The next wordcloud will use tweets with at least one word consider joyful.  The joyful words are removed, as well as the top 10 orverall words to get a better picture of the surrounding words unique with this sentiment.
+
+
+```{r, fig.width = 10}
+
+other_words <- nrc_words %>%
+  filter(sentiment == "joy") %>%
+  group_by(tweetid) %>%
+  tally %>% 
+  ungroup() %>%
+  inner_join(no_stop_words, by = "tweetid")  %>%
+  anti_join(joy_words, by = "word") %>%
+  anti_join(top_words, by = "word") %>%
+  group_by(word) %>%
+  count 
+
+other_words %>%
+  with(wordcloud(word, nn, max.words = 30, colors =  c( "#56B4E9", "#E69F00")))
+
+```
+
+## Conclusion
+
+The commentary on the results on the visualizations was limited because I am not a text mining expert. Personally, the results of the "joyful" words was a bit inpirational. 
+
+A more objective conclusion is that the `tidyverse` packages, which seems that it soon will include `tidytext`, make getting started on text mining easy and actually, fun!
+
+
+

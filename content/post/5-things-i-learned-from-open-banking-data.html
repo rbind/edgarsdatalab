@@ -1,0 +1,42 @@
+---
+title: "5 things I learned from open banking data"
+date: 2016-08-24
+slug: ''
+tags: 
+  - R
+  - ggplot2
+  - ARIMA
+  - Banking
+categories:
+  - Visualization
+  - Data analysis
+summary: "Interesting insights from analyzing banking data provided by the FDIC"
+thumbnail: post/5-things-i-learned-from-open-banking-data/banking-open.png
+---
+
+
+
+<p><em>Original published on LinkedIn, February 10 2016</em></p>
+<p>Banks and other financial institutions submit to the FDIC a report of all of the money held for deposit at each of their branches. A compilation of the reports from each bank is available as a single dataset on the FDIC’s website.</p>
+<p>Here are 5 insights from analyzing the most recent dataset:</p>
+<p><img src="/post/5-things-i-learned-from-open-banking-data/item1.png" width = 600></p>
+<ol style="list-style-type: decimal">
+<li><p>In 2015, $10.6 trillion dollars in total deposits were reported – This was the first eye opener for me; this number is a 1 followed by 13 zeroes.</p></li>
+<li><p>The data identifies 93 thousand branches distributed over 5,600 banks – That’s an average of only 16 branches per bank.</p></li>
+</ol>
+<p><img src="/post/5-things-i-learned-from-open-banking-data/item3.png" width = 600></p>
+<ol start="3" style="list-style-type: decimal">
+<li>One-tenth of 1% of the banks have 32% of all deposits and 18% of all of the branches – The gap between the 4th place bank in number of branches and the 4th place bank in deposits from the cluster of the top 3, it is at least $633 Billion (a 6 followed by 11 zeroes) and 1,500 branches.</li>
+</ol>
+<p><img src="/post/5-things-i-learned-from-open-banking-data/item41.png" width = 600></p>
+<ol start="4" style="list-style-type: decimal">
+<li>82% of banks reported deposits in 10 branches or less – As shown in the bar plot above too, almost half of all banks have 3 or less branches.</li>
+</ol>
+<p><img src="/post/5-things-i-learned-from-open-banking-data/item5c.png" width = 600></p>
+<ol start="5" style="list-style-type: decimal">
+<li>3 out of 4 branches are in the eastern half of the US – The dataset contains the geo location of each branch, so plotting them allows us to see a clear representation of the Continental US. Even though I was expecting pockets of concentration in the largest cities, the overall lopsided distribution came as a surprise. The combined total of branches in the eastern states of New York (5,270), Illinois (4,629), Pennsylvania (4,394), Ohio (3,839) and New Jersey (3,118) outnumber the total branches in the western half of the continental US. California was first place with 7,099 branches.</li>
+</ol>
+<p>Source code and data – The code I wrote for this analysis is available in R Markdown format at RPubs; here is the link <a href="http://goo.gl/HH5d06" class="uri">http://goo.gl/HH5d06</a></p>
+<p>If you may be new to R and R Markdown, the idea is that all my results can be recreated, or reproduced, by downloading my code and the FDIC data. All of the images in this post were created using a tool within R called <code>ggplot2</code>.</p>
+<p><strong>Final words</strong> – These are the highlights of a single year. For the next article, I’ll share what came out when I added multiple years to the analysis.</p>
+<p><em>Disclaimers:</em> The opinions in this article do not reflect those of my employer. This analysis is meant for general knowledge purposes; the writer accepts no responsibility for any action taken by the reader or others based on these results. Please also consider any disclaimers from the data provider, in this case the FDIC, which may be found at www.FDIC.gov</p>

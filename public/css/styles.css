@@ -160,7 +160,7 @@ article .summary {
 }
 
 article.single .thumb {
-  height: 18rem;
+  height: 8rem;
 }
 
 @media (max-width:  768px)  {

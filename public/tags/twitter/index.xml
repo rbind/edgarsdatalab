@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Twitter on Edgar&#39;s Data Lab</title>
+    <link>/tags/twitter/</link>
+    <description>Recent content in Twitter on Edgar&#39;s Data Lab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/twitter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Sentiment analysis using tidytext</title>
+      <link>/2017/09/04/sentiment-analysis-using-tidytext/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/04/sentiment-analysis-using-tidytext/</guid>
+      <description>Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.
+The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.
+Twitter data importThe twitterR package opens the Twitter API to R users.</description>
+    </item>
+    
+    <item>
+      <title>Sentiment analysis using tidytext</title>
+      <link>/2017/09/04/sentiment-analysis-using-tidytext/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/04/sentiment-analysis-using-tidytext/</guid>
+      <description>Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.
+The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.
+Twitter data importThe twitterR package opens the Twitter API to R users.</description>
+    </item>
+    
+  </channel>
+</rss>

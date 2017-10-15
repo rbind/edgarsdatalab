@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.26" />
+
+
+
+<link rel="canonical" href="/2017/09/04/sentiment-analysis-using-tidytext/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Sentiment analysis using tidytext - Edgar&#39;s Data Lab</title>
+    
+<meta name="description" content="Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.Twitter data importThe twitterR package opens the Twitter API to R users.">
+
+<meta property="og:title" content="Sentiment analysis using tidytext - Edgar&#39;s Data Lab">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2017/09/04/sentiment-analysis-using-tidytext/">
+<meta property="og:image" content="/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-14-1.png">
+<meta property="og:site_name" content="Edgar&#39;s Data Lab">
+<meta property="og:description" content="Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.Twitter data importThe twitterR package opens the Twitter API to R users.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Edgar&#39;s Data Lab">
+<meta name="twitter:url" content="/2017/09/04/sentiment-analysis-using-tidytext/">
+<meta name="twitter:title" content="Sentiment analysis using tidytext - Edgar&#39;s Data Lab">
+<meta name="twitter:description" content="Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.Twitter data importThe twitterR package opens the Twitter API to R users.">
+<meta name="twitter:image" content="/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-14-1.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"/"
+    },
+    "headline": "Sentiment analysis using tidytext - Edgar&#39;s Data Lab",
+    "image": {
+      "@type": "ImageObject",
+      "url": "/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-14-1.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-09-04T00:00:00JST",
+    "dateModified": "2017-09-04T00:00:00JST",
+    "author": {
+      "@type": "Person",
+      "name": "Edgar&#39;s Data Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Edgar&#39;s Data Lab",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.
+The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.
+Twitter data importThe twitterR package opens the Twitter API to R users."
+  }
+</script>
+
+
+    <link href="/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Edgar&#39;s Data Lab</a>
+          </div>
+
+          
+          <div id="navbar" class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              <li><a href="https://github.com/edgararuiz/">GitHub</a></li>
+              
+              
+              
+              <li><a href="https://www.linkedin.com/in/edgararuiz/">LinkedIn</a></li>
+              
+              
+              
+              <li><a href="https://twitter.com/theotheredgar/">Twitter</a></li>
+              
+              
+            </ul>
+            
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-9">
+
+
+    <article class="single">
+  <header>
+    
+    <h1 class="title">Sentiment analysis using tidytext</h1>
+    
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-09-04T00:00:00JST">Sep 4, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
+      
+    </ul>
+
+    
+  </header>
+
+  <div class="thumb" style="background-image: url(/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-14-1.png);"></div>
+
+  <div class="article-body"><div id="quick-intro" class="section level2">
+<h2>Quick intro</h2>
+<p>Getting familiar with the new <code>tidytext</code> package was a great weekend project. This example follows the structure of the <a href="https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html">Introduction to tidytext</a> article by the authors of the package, Julia Silge and David Robinson.</p>
+<p>The source of the text for this example are tweets. More specifically, tweets with the <strong>rstats</strong> hashtag. This project will also be an attempt to learn something about the community.</p>
+</div>
+<div id="twitter-data-import" class="section level2">
+<h2>Twitter data import</h2>
+<p>The <code>twitterR</code> package opens the Twitter API to R users. The <code>config</code> package is used to prevent placing the credentials in the code.</p>
+<p>Because these tweets were pulled at a specific point in time, anyone recreating this analysis may get different results.</p>
+<pre class="r"><code>library(twitteR)</code></pre>
+<pre class="r"><code>token &lt;- config::get()
+setup_twitter_oauth(token$key, token$secret, token$token, token$tsecret)</code></pre>
+<pre><code>## [1] &quot;Using direct authentication&quot;</code></pre>
+<pre class="r"><code>tweets &lt;- searchTwitter(&quot;#rstats&quot;, 10000)</code></pre>
+<pre><code>## Warning in doRppAPICall(&quot;search/tweets&quot;, n, params = params,
+## retryOnRateLimit = retryOnRateLimit, : 10000 tweets were requested but the
+## API can only return 9050</code></pre>
+</div>
+<div id="tidy-data" class="section level2">
+<h2>Tidy data</h2>
+<p>The <code>searchTwitter()</code> function returns a rather complex list object. Using the packages in the <a href="http://www.tidyverse.org/">tidyverse</a>, the complex list is converted to a tidy table, retweets are removed, and an usable date field is added</p>
+<pre class="r"><code>library(tidyverse)
+
+tidy_tweets &lt;- tibble(
+  screen_name = tweets %&gt;% map_chr(~.x$screenName),
+  tweetid = tweets %&gt;% map_chr(~.x$id),
+  created_timestamp = seq_len(length(tweets)) %&gt;% map_chr(~as.character(tweets[[.x]]$created)),
+  is_retweet = tweets %&gt;% map_chr(~.x$isRetweet),
+  text = tweets %&gt;% map_chr(~.x$text)
+) %&gt;%
+  mutate(created_date = as.Date(created_timestamp)) %&gt;%
+  filter(is_retweet == FALSE,
+         substr(text, 1,2) != &quot;RT&quot;)
+
+
+tidy_tweets</code></pre>
+<pre><code>## # A tibble: 2,389 x 6
+##      screen_name            tweetid   created_timestamp is_retweet
+##            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;      &lt;chr&gt;
+##  1     kearneymw 904169552526934017 2017-09-03 02:29:54      FALSE
+##  2 ahmad_m_mobin 904167193428074496 2017-09-03 02:20:32      FALSE
+##  3   SanghaChick 904166809083027457 2017-09-03 02:19:00      FALSE
+##  4     SavranWeb 904165843533213696 2017-09-03 02:15:10      FALSE
+##  5      nibrivia 904165791972687872 2017-09-03 02:14:58      FALSE
+##  6  Cruz_Julian_ 904162499343376385 2017-09-03 02:01:53      FALSE
+##  7  zabormetrics 904157256408813569 2017-09-03 01:41:03      FALSE
+##  8   AriLamstein 904156509755637760 2017-09-03 01:38:04      FALSE
+##  9    o_gonzales 904151758754238464 2017-09-03 01:19:12      FALSE
+## 10     Rbloggers 904149400884215809 2017-09-03 01:09:50      FALSE
+## # ... with 2,379 more rows, and 2 more variables: text &lt;chr&gt;,
+## #   created_date &lt;date&gt;</code></pre>
+</div>
+<div id="tidytext-transform" class="section level2">
+<h2>tidytext, transform!</h2>
+<div id="word-tokens" class="section level3">
+<h3>Word tokens</h3>
+<p>The <code>unnest_tokens()</code> command from the <code>tidytext</code> package easily transforms the existing tidy table with one row (observation) per tweet, to a table with one row (token) per word inside the tweet.</p>
+<pre class="r"><code>library(tidytext)
+
+tweet_words &lt;- tidy_tweets %&gt;%
+  select(tweetid,
+         screen_name,
+         text,
+         created_date) %&gt;%
+  unnest_tokens(word, text)
+
+tweet_words</code></pre>
+<pre><code>## # A tibble: 37,846 x 4
+##               tweetid   screen_name created_date       word
+##                 &lt;chr&gt;         &lt;chr&gt;       &lt;date&gt;      &lt;chr&gt;
+##  1 904169552526934017     kearneymw   2017-09-03        new
+##  2 904169552526934017     kearneymw   2017-09-03        hex
+##  3 904169552526934017     kearneymw   2017-09-03    sticker
+##  4 904169552526934017     kearneymw   2017-09-03        for
+##  5 904169552526934017     kearneymw   2017-09-03     rtweet
+##  6 904169552526934017     kearneymw   2017-09-03     rstats
+##  7 904169552526934017     kearneymw   2017-09-03      https
+##  8 904169552526934017     kearneymw   2017-09-03       t.co
+##  9 904169552526934017     kearneymw   2017-09-03 dfvl8xj2x6
+## 10 904167193428074496 ahmad_m_mobin   2017-09-03     pretty
+## # ... with 37,836 more rows</code></pre>
+</div>
+<div id="stop-words" class="section level3">
+<h3>Stop words</h3>
+<p>The <code>stop_words</code> table is part of <code>tidytext</code>, it contains common words that can be used to discard from an analysis. This is the kind of list that analysts usually have to find online and then clean up manually.</p>
+<pre class="r"><code>stop_words  </code></pre>
+<pre><code>## # A tibble: 1,149 x 2
+##           word lexicon
+##          &lt;chr&gt;   &lt;chr&gt;
+##  1           a   SMART
+##  2         a&#39;s   SMART
+##  3        able   SMART
+##  4       about   SMART
+##  5       above   SMART
+##  6   according   SMART
+##  7 accordingly   SMART
+##  8      across   SMART
+##  9    actually   SMART
+## 10       after   SMART
+## # ... with 1,139 more rows</code></pre>
+<p>An small custom stop words list is put together to reduce the noise caused by terms common in tweets.</p>
+<pre class="r"><code>my_stop_words &lt;- tibble(
+  word = c(
+    &quot;https&quot;,
+    &quot;t.co&quot;,
+    &quot;rt&quot;,
+    &quot;amp&quot;,
+    &quot;rstats&quot;,
+    &quot;gt&quot;
+  ),
+  lexicon = &quot;twitter&quot;
+)</code></pre>
+<p>The combined list of stop words are then used to remove such words from the words in the tweets. An additional filter is added to remove words that are numbers.</p>
+<pre class="r"><code>all_stop_words &lt;- stop_words %&gt;%
+  bind_rows(my_stop_words)
+
+suppressWarnings({
+  no_numbers &lt;- tweet_words %&gt;%
+    filter(is.na(as.numeric(word)))
+})
+
+no_stop_words &lt;- no_numbers %&gt;%
+  anti_join(all_stop_words, by = &quot;word&quot;)
+
+tibble(
+  total_words = nrow(tweet_words),
+  after_cleanup = nrow(no_stop_words)
+)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   total_words after_cleanup
+##         &lt;int&gt;         &lt;int&gt;
+## 1       37846         17964</code></pre>
+<p>More than half of the words in the tweets are considered stop words. Here is a quick look of the words that are currently at the top, based on occurrence:</p>
+<pre class="r"><code>top_words &lt;- no_stop_words %&gt;%
+  group_by(word) %&gt;%
+  tally %&gt;%
+  arrange(desc(n)) %&gt;%
+  head(10)
+
+top_words</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##               word     n
+##              &lt;chr&gt; &lt;int&gt;
+##  1     datascience   449
+##  2            data   284
+##  3            cran   201
+##  4         package   196
+##  5 machinelearning   108
+##  6         rstudio   102
+##  7          python    93
+##  8         updates    92
+##  9            code    88
+## 10      y5w2ntksxt    86</code></pre>
+</div>
+<div id="sentiment-matching" class="section level3">
+<h3>Sentiment matching</h3>
+<p>The <code>get_sentiments()</code> functions in <code>tidytext</code> makes it really easy to match words against different lexicons (vocabularies). The NRC lexicon was chosen for this analysis. The <code>get_sentiments()</code> function returns a data frame, a simple table join makes the lexicon part of the analysis.</p>
+<pre class="r"><code>nrc_words &lt;- no_stop_words %&gt;%
+  inner_join(get_sentiments(&quot;nrc&quot;), by = &quot;word&quot;)
+
+nrc_words </code></pre>
+<pre><code>## # A tibble: 4,126 x 5
+##               tweetid   screen_name created_date   word    sentiment
+##                 &lt;chr&gt;         &lt;chr&gt;       &lt;date&gt;  &lt;chr&gt;        &lt;chr&gt;
+##  1 904167193428074496 ahmad_m_mobin   2017-09-03 pretty anticipation
+##  2 904167193428074496 ahmad_m_mobin   2017-09-03 pretty          joy
+##  3 904167193428074496 ahmad_m_mobin   2017-09-03 pretty     positive
+##  4 904167193428074496 ahmad_m_mobin   2017-09-03 pretty        trust
+##  5 904167193428074496 ahmad_m_mobin   2017-09-03   cool     positive
+##  6 904166809083027457   SanghaChick   2017-09-03    fun anticipation
+##  7 904166809083027457   SanghaChick   2017-09-03    fun          joy
+##  8 904166809083027457   SanghaChick   2017-09-03    fun     positive
+##  9 904165843533213696     SavranWeb   2017-09-03 script     positive
+## 10 904165791972687872      nibrivia   2017-09-03  start anticipation
+## # ... with 4,116 more rows</code></pre>
+<p>It is worth mentioning that in the NRC lexicon, one word may have multiple sentiments. For example, the word <em>wait</em>, has a <em>negative</em> and an <em>anticipation</em> classification. From the data joining perspective, this means multiple matches for words that have more than one sentiment.</p>
+<pre class="r"><code>nrc_words %&gt;%
+  group_by(sentiment) %&gt;%
+  tally %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##       sentiment     n
+##           &lt;chr&gt; &lt;int&gt;
+##  1     positive  1225
+##  2        trust   770
+##  3 anticipation   512
+##  4          joy   385
+##  5     negative   381
+##  6         fear   190
+##  7      sadness   180
+##  8      disgust   173
+##  9     surprise   171
+## 10        anger   139</code></pre>
+<p>Removing that many words from the analysis may mean that there are tweets that had no words that matched NRC. A quick count of the unique <code>tweetid</code> will provide the answer. In this case, all the tweets from <code>tidy_tweets</code> had at least 1 word that matched NRC list.</p>
+<pre class="r"><code>nrc_words %&gt;%
+  group_by(tweetid) %&gt;%
+  tally %&gt;%
+  ungroup %&gt;%
+  count %&gt;%
+  pull</code></pre>
+<pre><code>## [1] 1362</code></pre>
+</div>
+</div>
+<div id="visualize-results" class="section level2">
+<h2>Visualize results</h2>
+<p>The first visualization is a joyplot using <code>ggplot2</code> and the new <code>ggjoy</code> extension created by Claus O. Wilke.</p>
+<pre class="r"><code>library(ggjoy)
+
+  ggplot(nrc_words) +
+    geom_joy(aes(
+      x = created_date,
+      y = sentiment, 
+      fill = sentiment),
+      rel_min_height = 0.01,
+      alpha = 0.7,
+      scale = 3) +
+    theme_joy() +
+    labs(title = &quot;Twitter #rstats sentiment analysis&quot;,
+         x = &quot;Tweet Date&quot;,
+         y = &quot;Sentiment&quot;) + 
+    scale_fill_discrete(guide=FALSE)</code></pre>
+<pre><code>## Picking joint bandwidth of 0.683</code></pre>
+<p><img src="/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div id="joyful-words" class="section level3">
+<h3>Joyful words</h3>
+<p>The influence of words classified as “joy” by NRC are analyzed in the <code>wordcloud()</code> function inside the <code>wordcloud</code> package. The words, <strong>love</strong> and <strong>create</strong> come out one top.</p>
+<pre class="r"><code>library(RColorBrewer)
+library(wordcloud)
+
+
+set.seed(10)
+
+joy_words &lt;- nrc_words %&gt;%
+  filter(sentiment == &quot;joy&quot;) %&gt;%
+  group_by(word) %&gt;%
+  tally
+
+
+joy_words %&gt;%
+  with(wordcloud(word, n, max.words = 50, colors =  c(&quot;#56B4E9&quot;, &quot;#E69F00&quot;)))</code></pre>
+<p><img src="/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Because a tweet is short, it made sense to find out what words surround joyful words. The next wordcloud will use tweets with at least one word consider joyful. The joyful words are removed, as well as the top 10 orverall words to get a better picture of the surrounding words unique with this sentiment.</p>
+<pre class="r"><code>other_words &lt;- nrc_words %&gt;%
+  filter(sentiment == &quot;joy&quot;) %&gt;%
+  group_by(tweetid) %&gt;%
+  tally %&gt;% 
+  ungroup() %&gt;%
+  inner_join(no_stop_words, by = &quot;tweetid&quot;)  %&gt;%
+  anti_join(joy_words, by = &quot;word&quot;) %&gt;%
+  anti_join(top_words, by = &quot;word&quot;) %&gt;%
+  group_by(word) %&gt;%
+  count 
+
+other_words %&gt;%
+  with(wordcloud(word, nn, max.words = 30, colors =  c( &quot;#56B4E9&quot;, &quot;#E69F00&quot;)))</code></pre>
+<pre><code>## Warning in wordcloud(word, nn, max.words = 30, colors = c(&quot;#56B4E9&quot;,
+## &quot;#E69F00&quot;)): proposals could not be fit on page. It will not be plotted.</code></pre>
+<p><img src="/post/rstats_tweets_tidyverse_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>The commentary on the results on the visualizations was limited because I am not a text mining expert. Personally, the results of the “joyful” words was a bit inpirational.</p>
+<p>A more objective conclusion is that the <code>tidyverse</code> packages, which seems that it soon will include <code>tidytext</code>, make getting started on text mining easy and actually, fun!</p>
+</div>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="/tags/r/">R</a></li>
+          
+          <li><a href="/tags/tidytext/">tidytext</a></li>
+          
+          <li><a href="/tags/ggplot2/">ggplot2</a></li>
+          
+          <li><a href="/tags/ggjoy/">ggjoy</a></li>
+          
+          <li><a href="/tags/sentiment/">Sentiment</a></li>
+          
+          <li><a href="/tags/twitter/">Twitter</a></li>
+          
+          <li><a href="/tags/twitter/">twitteR</a></li>
+          
+          <li><a href="/tags/tidyverse/">tidyverse</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-3">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/2017/09/04/sentiment-analysis-using-tidytext/" class="list-group-item">Sentiment analysis using tidytext</a>
+      
+      <a href="/2016/08/25/publish-to-a-shiny-server/" class="list-group-item">Publish to a Shiny Server</a>
+      
+      <a href="/2016/08/25/setup-a-shiny-server-in-aws/" class="list-group-item">Setup a Shiny Server in AWS</a>
+      
+      <a href="/2016/08/25/infographic-16-years-of-banking-dataand-beyond/" class="list-group-item">[Infographic] 16 years of Banking Data…and beyond</a>
+      
+      <a href="/2016/08/24/5-things-i-learned-from-open-banking-data/" class="list-group-item">5 things I learned from open banking data</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Top 10 CATEGORIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/categories/data-analysis" class="list-group-item">data-analysis</a>
+      
+      <a href="/categories/how-to-guide" class="list-group-item">how-to-guide</a>
+      
+      <a href="/categories/r-admins" class="list-group-item">r-admins</a>
+      
+      <a href="/categories/server-setup" class="list-group-item">server-setup</a>
+      
+      <a href="/categories/visualization" class="list-group-item">visualization</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Top 10 TAGS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/tags/r" class="list-group-item">r</a>
+      
+      <a href="/tags/ggplot2" class="list-group-item">ggplot2</a>
+      
+      <a href="/tags/arima" class="list-group-item">arima</a>
+      
+      <a href="/tags/banking" class="list-group-item">banking</a>
+      
+      <a href="/tags/rstudio-server" class="list-group-item">rstudio-server</a>
+      
+      <a href="/tags/shiny-server" class="list-group-item">shiny-server</a>
+      
+      <a href="/tags/twitter" class="list-group-item">twitter</a>
+      
+      <a href="/tags/aws" class="list-group-item">aws</a>
+      
+      <a href="/tags/ec2" class="list-group-item">ec2</a>
+      
+      <a href="/tags/ggjoy" class="list-group-item">ggjoy</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Edgar&#39;s Data Lab</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on edgarsdatalab</title>
+    <title>Categories on Edgar&#39;s Data Lab</title>
     <link>/categories/</link>
-    <description>Recent content in Categories on edgarsdatalab</description>
+    <description>Recent content in Categories on Edgar&#39;s Data Lab</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
@@ -11,11 +11,47 @@
     
     
     <item>
-      <title>R</title>
-      <link>/categories/r/</link>
+      <title>Data Analysis</title>
+      <link>/categories/data-analysis/</link>
       <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>/categories/r/</guid>
+      <guid>/categories/data-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>How to Guide</title>
+      <link>/categories/how-to-guide/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/how-to-guide/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Admins</title>
+      <link>/categories/r-admins/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/r-admins/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Server Setup</title>
+      <link>/categories/server-setup/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/server-setup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visualization</title>
+      <link>/categories/visualization/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/visualization/</guid>
       <description></description>
     </item>
     

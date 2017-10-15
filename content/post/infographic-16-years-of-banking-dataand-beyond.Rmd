@@ -1,0 +1,33 @@
+---
+title: "[Infographic] 16 years of Banking Data…and beyond"
+date: 2016-08-25
+slug: ''
+tags: 
+  - R
+  - ggplot2
+  - ARIMA
+  - Banking
+categories:
+  - Visualization
+  - Data analysis
+summary: "An attempt to learn more about Setiment Analysis and to use the tidytext package."
+thumbnail: post/infographic-16-years-of-banking-dataand-beyond/inforgraphic-preview.png
+---
+
+**Originaly published on LinkedIn, March 6 2016**
+
+
+
+![](/post/infographic-16-years-of-banking-dataand-beyond/inforgraphic-preview.png)
+<br/>
+[For the full size version click here](https://github.com/edgararuiz/summaryofdeposits/blob/master/inforgraphic.png)
+
+**The Data** – 1.5 million rows across 16 files were brought into the analysis.  Each file contained a specific year and each row a specific branch.
+
+**The Math** – For the forecasting, the model methodology used was ARIMA (Autoregressive Integrated Moving Average).   This kind of model works well for time series analysis.  To see the full R Markup report describing how each model was chosen [click here](http://rpubs.com/edgarruiz/159145).
+
+**The Tech** – Everything in the Infographic was laid out using lines of code in R.  All of the source code and ancillary files are available in my GitHub account, [here is the link](https://github.com/edgararuiz/summaryofdeposits/blob/master/Summary%20of%20Deposits%20-%20%20Years.Rmd).
+
+**Final words** – These highlights were from the highest level aggregates.  There are even more insights we can gain where we are all able to drill down into lower levels.  For the next article, I plan to make the data available via an interactive report.
+
+**Disclaimers:**  The opinions in this article do not reflect those of my employer.  This analysis is meant for general knowledge purposes; the writer accepts no responsibility for any action taken by the reader or others based on these results.  Please also consider any disclaimers from the data provider, in this case the FDIC, which may be found at http://www.FDIC.gov
