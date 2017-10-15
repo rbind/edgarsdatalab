@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.26" />
+<meta name="generator" content="Hugo 0.29" />
 
 
 
@@ -162,12 +162,16 @@
 <li>Click Add Rule, select Type: All Trafic | Source: My IPOptional: If you want to open your Shiny server to the world – Click Add Rule, select Type: Custom TCP Rule | Port Range: 3838 |Source: Anywhere</li>
 <li>Optional: If you plan to have to publish apps from a RStudio server within the local network (VPC) – Click Add Rule, select Type: All Traffic | Source: Custom and type the the first two numbers in the IP address followed by ‘.0.0/16’ (So,if your Shiny server’s internal IP address is 172.31.2.200 then you’d enter 172.31.0.0/16 This gives every server in your VPC access to your Shiny server and to each other)</li>
 </ul>
-<p>After clicking Launch the “Select existing pair or create a new pair” screen will appear, select:Create a new pairKey pair name: shiny Click Download Key Pair</p>
-<p>Save the file</p>
-<p>Click Launch Instances</p>
-<p>Go to the Instances section in the EC2 Dashboard section and click on the new instance Copy the Public DNS address, from here on we’ll refer to it as MY_PUBLIC_DNS</p>
-<div id="key-and-connection-setup-from-laptop" class="section level3">
-<h3>Key and Connection setup from laptop</h3>
+<ol style="list-style-type: decimal">
+<li>After clicking Launch the “Select existing pair or create a new pair” screen will appear, select:Create a new pairKey pair name: shiny</li>
+<li>Click Download Key Pair</li>
+<li>Save the file</li>
+<li>Click Launch Instances</li>
+<li>Go to the Instances section in the EC2 Dashboard section and click on the new instance</li>
+<li>Copy the Public DNS address, from here on we’ll refer to it as MY_PUBLIC_DNS</li>
+</ol>
+<div id="connecting-to-the-server" class="section level3">
+<h3>Connecting to the Server</h3>
 <p>AWS provides the step-by-step instructions for this part:</p>
 <p><strong>Windows</strong> – <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.htmlComplete" class="uri">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.htmlComplete</a> sections Converting Your Private Key Using PuTTYgen and Starting a PuTTY Session</p>
 <p><strong>Non-Windows</strong> – <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.htmlOnly" class="uri">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.htmlOnly</a> go through the instructions in the To connect to your instance using SSH section Shiny server configuration</p>
@@ -194,7 +198,7 @@ sudo gdebi shiny-server-1.4.4.801-amd64.deb
 </div>
 <div id="install-rstudio" class="section level2">
 <h2>Install RStudio</h2>
-<p><strong>Why install RStudio Server along the Shiny Server?</strong> I’m using RStudio to upload and test my apps along with any other supporting files. This removes the need to setup complicated security and FTP.</p>
+<p><strong>Why install RStudio Server along the Shiny Server?</strong> RStudio will be used to upload the app and its dependencies. It will also allow testing of the app inside the RStudio IDE. This removes the need to setup complicated security and FTP.</p>
 <p>The steps below install the current version. To find updated instructions navigate to: <a href="https://www.rstudio.com/products/rstudio/download-server/" class="uri">https://www.rstudio.com/products/rstudio/download-server/</a> and select <strong>Debian/Ubuntu</strong></p>
 <pre class="bash"><code>wget https://download2.rstudio.org/rstudio-server-0.99.903-amd64.deb
 sudo gdebi rstudio-server-0.99.903-amd64.deb</code></pre>
@@ -209,16 +213,13 @@ sudo chown rstudio /srv/shiny-server/
 <p>Any package that an ‘Shiny App’ uses will need to be pre-installed, or the will crash. Here are a few we will load before we start using the server. If you need any other package, just follow the instruction pattern, replacing the name of the desired package.</p>
 <p>You can always install more packages later via a terminal session</p>
 <pre class="bash"><code>sudo su - -c &quot;R -e \&quot;install.packages(&#39;rmarkdown&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;ggvis&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;ggplot2&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
+sudo su - -c &quot;R -e \&quot;install.packages(&#39;tidyverse&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;compat-gmp4&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;compat-libffi5&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;ggplot2&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;stats&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;plyr&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;maps&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;stringr&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;mapproj&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;ggExtra&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;ggthemes&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
 sudo su - -c &quot;R -e \&quot;install.packages(&#39;stats&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
@@ -357,15 +358,11 @@ sudo nano /etc/fstab</code></pre></li>
     </div>
     <div class="list-group">
       
-      <a href="/2016/12/30/a-plain-markdown-post/" class="list-group-item">A Plain Markdown Post</a>
+      <a href="/2016/08/25/publish-to-a-shiny-server/" class="list-group-item">Publish to a Shiny Server</a>
       
       <a href="/2016/08/25/shiny-server-in-aws/" class="list-group-item">Shiny Server in AWS</a>
       
       <a href="/about/" class="list-group-item">About</a>
-      
-      <a href="/2015/07/23/hello-r-markdown/" class="list-group-item">Hello R Markdown</a>
-      
-      <a href="/2015/01/01/lorem-ipsum/" class="list-group-item">Lorem Ipsum</a>
       
       <a href="/tags/aws/" class="list-group-item">Aws</a>
       
@@ -373,9 +370,13 @@ sudo nano /etc/fstab</code></pre></li>
       
       <a href="/tags/ec2/" class="list-group-item">Ec2</a>
       
-      <a href="/tags/plot/" class="list-group-item">Plot</a>
-      
       <a href="/post/" class="list-group-item">Posts</a>
+      
+      <a href="/categories/r/" class="list-group-item">R</a>
+      
+      <a href="/tags/samba/" class="list-group-item">Samba</a>
+      
+      <a href="/tags/shiny/" class="list-group-item">Shiny</a>
       
     </div>
   </section>
@@ -402,13 +403,11 @@ sudo nano /etc/fstab</code></pre></li>
       
       <a href="/tags/ec2" class="list-group-item">ec2</a>
       
-      <a href="/tags/plot" class="list-group-item">plot</a>
-      
-      <a href="/tags/r-markdown" class="list-group-item">r-markdown</a>
-      
-      <a href="/tags/regression" class="list-group-item">regression</a>
+      <a href="/tags/samba" class="list-group-item">samba</a>
       
       <a href="/tags/shiny" class="list-group-item">shiny</a>
+      
+      <a href="/tags/shiny-server" class="list-group-item">shiny-server</a>
       
     </div>
   </section>

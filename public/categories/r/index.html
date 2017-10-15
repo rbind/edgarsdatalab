@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.26" />
+<meta name="generator" content="Hugo 0.29" />
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/categories/r/index.xml">
 
@@ -86,6 +86,27 @@
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
       
     </ul>
+    <h2 class="title"><a href="/2016/08/25/publish-to-a-shiny-server/">Publish to a Shiny Server</a></h2>
+  </header>
+
+  
+  <div class="summary">The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
+The plan is to:
+Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command</div>
+
+  <footer>
+    <a href="/2016/08/25/publish-to-a-shiny-server/" title="Publish to a Shiny Server">Read More…</a>
+  </footer>
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2016-08-25T00:00:00JST">Aug 25, 2016</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
+      
+    </ul>
     <h2 class="title"><a href="/2016/08/25/shiny-server-in-aws/">Shiny Server in AWS</a></h2>
   </header>
 
@@ -94,27 +115,6 @@
 
   <footer>
     <a href="/2016/08/25/shiny-server-in-aws/" title="Shiny Server in AWS">Read More…</a>
-  </footer>
-</article>
-</li>
-      
-      <li><article class="li">
-  <header>
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2015-07-23T21:13:14JST">Jul 23, 2015</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
-      
-    </ul>
-    <h2 class="title"><a href="/2015/07/23/hello-r-markdown/">Hello R Markdown</a></h2>
-  </header>
-
-  
-  <div class="summary">R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</div>
-
-  <footer>
-    <a href="/2015/07/23/hello-r-markdown/" title="Hello R Markdown">Read More…</a>
   </footer>
 </article>
 </li>
@@ -135,15 +135,11 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </div>
     <div class="list-group">
       
-      <a href="/2016/12/30/a-plain-markdown-post/" class="list-group-item">A Plain Markdown Post</a>
+      <a href="/2016/08/25/publish-to-a-shiny-server/" class="list-group-item">Publish to a Shiny Server</a>
       
       <a href="/2016/08/25/shiny-server-in-aws/" class="list-group-item">Shiny Server in AWS</a>
       
       <a href="/about/" class="list-group-item">About</a>
-      
-      <a href="/2015/07/23/hello-r-markdown/" class="list-group-item">Hello R Markdown</a>
-      
-      <a href="/2015/01/01/lorem-ipsum/" class="list-group-item">Lorem Ipsum</a>
       
       <a href="/tags/aws/" class="list-group-item">Aws</a>
       
@@ -151,9 +147,13 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       
       <a href="/tags/ec2/" class="list-group-item">Ec2</a>
       
-      <a href="/tags/plot/" class="list-group-item">Plot</a>
-      
       <a href="/post/" class="list-group-item">Posts</a>
+      
+      <a href="/categories/r/" class="list-group-item">R</a>
+      
+      <a href="/tags/samba/" class="list-group-item">Samba</a>
+      
+      <a href="/tags/shiny/" class="list-group-item">Shiny</a>
       
     </div>
   </section>
@@ -180,13 +180,11 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       
       <a href="/tags/ec2" class="list-group-item">ec2</a>
       
-      <a href="/tags/plot" class="list-group-item">plot</a>
-      
-      <a href="/tags/r-markdown" class="list-group-item">r-markdown</a>
-      
-      <a href="/tags/regression" class="list-group-item">regression</a>
+      <a href="/tags/samba" class="list-group-item">samba</a>
       
       <a href="/tags/shiny" class="list-group-item">shiny</a>
+      
+      <a href="/tags/shiny-server" class="list-group-item">shiny-server</a>
       
     </div>
   </section>

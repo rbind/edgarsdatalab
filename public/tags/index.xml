@@ -30,29 +30,11 @@
     </item>
     
     <item>
-      <title>Plot</title>
-      <link>/tags/plot/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>Samba</title>
+      <link>/tags/samba/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>/tags/plot/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R Markdown</title>
-      <link>/tags/r-markdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/tags/r-markdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Regression</title>
-      <link>/tags/regression/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/tags/regression/</guid>
+      <guid>/tags/samba/</guid>
       <description></description>
     </item>
     
@@ -62,6 +44,15 @@
       <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
       
       <guid>/tags/shiny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shiny Server</title>
+      <link>/tags/shiny-server/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/shiny-server/</guid>
       <description></description>
     </item>
     

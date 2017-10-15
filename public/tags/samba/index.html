@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.29" />
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="/tags/ec2/index.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/tags/samba/index.xml">
 
-<link rel="canonical" href="/tags/ec2/">
+<link rel="canonical" href="/tags/samba/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Ec2 - edgarsdatalab</title>
+    <title>Samba - edgarsdatalab</title>
     
     <link href="/css/styles.css" rel="stylesheet">
     
@@ -73,7 +73,7 @@
 
     
     <header class="page-header">
-      <h1>Ec2</h1>
+      <h1>Samba</h1>
     </header>
     
 
@@ -86,14 +86,16 @@
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
       
     </ul>
-    <h2 class="title"><a href="/2016/08/25/shiny-server-in-aws/">Shiny Server in AWS</a></h2>
+    <h2 class="title"><a href="/2016/08/25/publish-to-a-shiny-server/">Publish to a Shiny Server</a></h2>
   </header>
 
   
-  <div class="summary">AWS/EC2 SetupAmazon Machine Instance: UbuntuInstance Type: m4.largeNo changesStorage: 30 Size GiBNo changesSecurity Group Name: ShinyClick Add Rule, select Type: All Trafic | Source: My IPOptional: If you want to open your Shiny server to the world – Click Add Rule, select Type: Custom TCP Rule | Port Range: 3838 |Source: AnywhereOptional: If you plan to have to publish apps from a RStudio server within the local network (VPC) – Click Add Rule, select Type: All Traffic | Source: Custom and type the the first two numbers in the IP address followed by ‘.</div>
+  <div class="summary">The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
+The plan is to:
+Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command</div>
 
   <footer>
-    <a href="/2016/08/25/shiny-server-in-aws/" title="Shiny Server in AWS">Read More…</a>
+    <a href="/2016/08/25/publish-to-a-shiny-server/" title="Publish to a Shiny Server">Read More…</a>
   </footer>
 </article>
 </li>
