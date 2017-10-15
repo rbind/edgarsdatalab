@@ -6,19 +6,10 @@
     <description>Recent content in Regression on edgarsdatalab</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
     
 	<atom:link href="/tags/regression/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Shiny Server in AWS</title>
-      <link>/2016/08/25/shiny-server-in-aws/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/shiny-server-in-aws/</guid>
-      <description>AWS/EC2 SetupAmazon Machine Instance: UbuntuInstance Type: m4.largeNo changesStorage: 30 Size GiBNo changesSecurity Group Name: ShinyClick Add Rule, select Type: All Trafic | Source: My IPOptional: If you want to open your Shiny server to the world – Click Add Rule, select Type: Custom TCP Rule | Port Range: 3838 |Source: Anywhere Optional: If you plan to have to publish apps from a RStudio server within the local network (VPC) – Click Add Rule, select Type: All Traffic | Source: Custom and type the the first two numbers in the IP address followed by ‘.</description>
-    </item>
     
     <item>
       <title>Hello R Markdown</title>

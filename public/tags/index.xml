@@ -12,9 +12,27 @@
     
     
     <item>
+      <title>Aws</title>
+      <link>/tags/aws/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ec2</title>
+      <link>/tags/ec2/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/ec2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Plot</title>
       <link>/tags/plot/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
       <guid>/tags/plot/</guid>
       <description></description>
@@ -23,7 +41,7 @@
     <item>
       <title>R Markdown</title>
       <link>/tags/r-markdown/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
       <guid>/tags/r-markdown/</guid>
       <description></description>
@@ -32,9 +50,18 @@
     <item>
       <title>Regression</title>
       <link>/tags/regression/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
       <guid>/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shiny</title>
+      <link>/tags/shiny/</link>
+      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/shiny/</guid>
       <description></description>
     </item>
     
