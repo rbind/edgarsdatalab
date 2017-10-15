@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.29" />
+<meta name="generator" content="Hugo 0.26" />
 
 
 
@@ -159,10 +159,10 @@
 <p>There are many differences in syntax between Blackfriday&rsquo;s Markdown and Pandoc&rsquo;s Markdown. For example, you can write a task list with Blackfriday but not with Pandoc:</p>
 
 <ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Write an R package.</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Write a book.</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> &hellip;</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Profit!</label></li>
+<li><input type="checkbox" checked disabled class="task-list-item"> Write an R package.</li>
+<li><input type="checkbox" disabled class="task-list-item"> Write a book.</li>
+<li><input type="checkbox" disabled class="task-list-item"> &hellip;</li>
+<li><input type="checkbox" disabled class="task-list-item"> Profit!</li>
 </ul>
 
 <p>Similarly, Blackfriday does not support LaTeX math and Pandoc does. I have added the MathJax support to this theme (<a href="https://github.com/yihui/hugo-lithium-theme">hugo-lithium-theme</a>) but there is a caveat for plain Markdown posts: you have to include math expressions in a pair of backticks (inline: <code>`$ $`</code>; display style: <code>`$$ $$`</code>), e.g., <code>$S_n = \sum_{i=1}^n X_i$</code>.<sup class="footnote-ref" id="fnref:This-is-because"><a rel="footnote" href="#fn:This-is-because">1</a></sup> For R Markdown posts, you do not need the backticks, because Pandoc can identify and process math expressions.</p>

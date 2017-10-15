@@ -24,16 +24,19 @@ tags: ["Shiny", "AWS", "EC2"]
 <p>After clicking Launch the “Select existing pair or create a new pair” screen will appear, select:Create a new pairKey pair name: shiny Click Download Key Pair</p>
 <p>Save the file</p>
 <p>Click Launch Instances</p>
-<p>Go to the Instances section in the EC2 Dashboard section and click on the new instance Copy the Public DNS address, from here on we’ll refer to it as MY_PUBLIC_DNS Key and Connection setup from laptop</p>
+<p>Go to the Instances section in the EC2 Dashboard section and click on the new instance Copy the Public DNS address, from here on we’ll refer to it as MY_PUBLIC_DNS</p>
+<div id="key-and-connection-setup-from-laptop" class="section level3">
+<h3>Key and Connection setup from laptop</h3>
 <p>AWS provides the step-by-step instructions for this part:</p>
 <p><strong>Windows</strong> – <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.htmlComplete" class="uri">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.htmlComplete</a> sections Converting Your Private Key Using PuTTYgen and Starting a PuTTY Session</p>
 <p><strong>Non-Windows</strong> – <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.htmlOnly" class="uri">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.htmlOnly</a> go through the instructions in the To connect to your instance using SSH section Shiny server configuration</p>
+</div>
 </div>
 <div id="install-r" class="section level2">
 <h2>Install R</h2>
 <p>We need to update the package list so that Ubuntu installs the latest R version. Here is the reference: <a href="https://cran.r-project.org/bin/linux/ubuntu/" class="uri">https://cran.r-project.org/bin/linux/ubuntu/</a></p>
 <p><strong>Tip: </strong> The terminal commands inside the boxes can be copied and pasted into your terminal session. In putty you can use right-click as the “paste” command.</p>
-<pre class="bash"><code>sudo sh -c &#39;echo &quot;deb http://cran.rstudio.com/bin/linux/ubuntu trusty/&quot; &gt;&gt; /etc/apt/sources.list&#39;
+<pre class="bash"><code>sudo sh -c &#39;echo &quot;deb http://cran.rstudio.com/bin/linux/ubuntu xenial/&quot; &gt;&gt; /etc/apt/sources.list&#39;
 gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
 gpg -a --export E084DAB9 | sudo apt-key add -
 sudo apt-get update
@@ -58,7 +61,7 @@ sudo gdebi rstudio-server-0.99.903-amd64.deb</code></pre>
 <pre class="bash"><code>sudo adduser rstudio
 sudo usermod -aG sudo rstudio
 sudo chown rstudio /srv/shiny-server/
-type rstudio as the password</code></pre>
+## select and type a password</code></pre>
 </div>
 <div id="pre-install-r-packages" class="section level2">
 <h2>Pre-install R packages</h2>
@@ -86,12 +89,12 @@ sudo su - -c &quot;R -e \&quot;install.packages(&#39;flexdashboard&#39;, repos=&
 </div>
 <div id="publishing-apps" class="section level2">
 <h2>Publishing apps</h2>
-</div>
-<div id="publishing-from-a-laptop" class="section level2">
-<h2>Publishing from a laptop</h2>
+<div id="publishing-from-within-the-rstudio-server" class="section level3">
+<h3>Publishing from within the RStudio Server</h3>
 <ol style="list-style-type: decimal">
-<li>Navigate to the RStudio server and log on as ‘rstudio’</li>
-<li>Confirm that the latest version of R is loaded (As of today is 3.3.1)</li>
+<li>Navigate to the RStudio server: <a href="http://MY_PUBLIC_DNS:8787/" class="uri">http://MY_PUBLIC_DNS:8787/</a></li>
+<li>Log on as ‘<em>rstudio</em>’</li>
+<li>Confirm that the latest version of R is loaded (As of today is 3.4.2)</li>
 <li>Click File – New File – Shiny Web App</li>
 <li>Application Name: my_test</li>
 <li>Click Browse</li>
@@ -100,8 +103,9 @@ sudo su - -c &quot;R -e \&quot;install.packages(&#39;flexdashboard&#39;, repos=&
 <li>Click Choose and then click Create</li>
 <li>Navigate to your new app by going to: <a href="http://MY_PUBLIC_DNS:3838/my_test" class="uri">http://MY_PUBLIC_DNS:3838/my_test</a></li>
 </ol>
-<div id="publishing-from-a-rstudio-server-in-the-local-network" class="section level3">
-<h3>Publishing from a RStudio server in the local network</h3>
+</div>
+<div id="publishing-from-an-rstudio-server-in-the-local-network" class="section level3">
+<h3>Publishing from an RStudio server in the local network</h3>
 <p>The following method sets up a single user in the RStudio server to have ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the Shiny server shiny-server folder. In order for RStudio to create folders and files, a specific user needs to logged on in the RStudio server. This is why we are not putting the ‘shiny-server’ mount point in a more generic location. For purposes of this document, I’ll use shiny-user as the user.</p>
 <p>The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.</p>
 <p>Make sure to perform the second optional security setting in the ‘AWS/EC2 Setup’ section</p>
