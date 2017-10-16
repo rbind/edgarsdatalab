@@ -3,7 +3,7 @@ languageCode = "en-us"
 title = "Edgar's Data Lab"
 theme = "hugo_theme_beg"
 features = ["responsive", "thumbnail", "syntax highlight", "structured data", "ogp", "twitter cards"]
-googleAnalytics = ""
+googleAnalytics = "UA-108242418-1"
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
