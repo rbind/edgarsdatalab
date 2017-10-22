@@ -1,0 +1,306 @@
+---
+title: "Intro to TensorFlow in R"
+date: 2017-10-22
+slug: ''
+tags: 
+  - R
+  - TensorFlow
+  - tfestimators
+  - tensorboard
+  - Sentiment
+summary: "TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me."
+thumbnail: post/intro-to-tfestimators/tensorboard.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+library(tidyverse)
+```
+
+[TensorFlow](https://www.tensorflow.org/) is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.
+
+## Training wheels
+
+TensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm.  But even a simple linear regression model has to be built "from scratch" using layers and estimators in TensorFlow. 
+
+TensorFlow has a high-level API that provides "canned models" which, in my opinion, lowers the barrier to entry into experimenting with TensorFlow. And of course, R users are now able to access this API via the [tfestimators](https://tensorflow.rstudio.com/tfestimators/) package.
+
+## Setup
+
+TensorFlow can be installed in a desktop or laptop. It requires some work that go beyond a simple R package installation.  Here are the general steps:
+
+1. **python** - TensorFlow uses python as its front-end, so it needs be installed prior to it being installed in the computer.  For Windows PC's the recommended python distribution can be downloaded from here:
+https://www.anaconda.com/download/#windows
+
+1. **RTools (Windows only)** - An additional dependency for Windows is RTools, it can be downloaded here: https://cran.r-project.org/bin/windows/RTools/
+
+1. **R dependencies** - There are two packages that need to be installed prior to installing `tensorflow` and `tfestimators`.
+```r
+install.packages("Rcpp")
+install.packages("tidyselect")
+```
+
+1. **TF R pacakges** - With all of the dependencies taken care of, the `tensorflow` and `tfestimators` packages can be installed. Technically, only `tfestimators` needs to be installed to complete this exercise.
+```r
+install.packages("tensorflow")
+devtools::install_github("rstudio/tfestimators")
+```
+1. **TensorFlow** - Finally, after the R packages are installed, the actual TensorFlow system needs to be installed in the computer.  The `install_tensorflow()` function simplifies this step.
+```r
+install_tensorflow(version = "1.3.0")
+```
+
+## The model
+
+The `tfestimators` package is the only one that will be loaded into R at this time.
+
+```{r}
+library(tfestimators)
+```
+
+
+### The plan
+
+
+1. Define the feature columns (predictors)
+1. Choose the model
+1. Define the model inputs (response ~ feature columns)
+1. Split the data into training and test
+1. Train the model
+1. Evaluate the model
+1. Run predictions with the model
+
+In R, most of these steps are usually covered in a single modeling function.  And without the Estimators high-level API, these would be even more steps.  The overall goal of this exercise is to introduce the workflow, and mindset needed to create Machine Learning applications using TensorFlow.
+
+Refer to the [full code](#fullcode) if you wish to copy and paste it in your computer to follow along or test.
+
+
+### 1. Define the feature columns (predictors)
+
+Think of **feature columns** as the **predictors** or **terms** of a regular model. In this step, the type, values and other properties of the variable is defined.  There are [ten functions](https://tensorflow.rstudio.com/tfestimators/reference/#section-feature-columns) in `tfestimators` that can be used to prepare the definitions:
+
+- column_bucketized
+- column_categorical_weighted
+- column_categorical_with_hash_bucket
+- column_categorical_with_identity
+- column_categorical_with_vocabulary_file
+- column_categorical_with_vocabulary_list
+- column_crossed
+- column_embedding
+- column_indicator
+- column_numeric
+
+Data from the familiar `titanic` package is going to be used for this example. Notice that the package, or the data, are not being loaded or called at this time. The reason is to highlight that the columns definition is not evaluated by R or TensorFlow in this step.  
+
+The *Sex* and *Embarked* variables will be defined as categorical, and their possible values are set by passing a list to the `vocabulary_list` argument.  The *Pclass* variable is passed as a numeric feature, so there no further definition.
+
+```{r}
+cols <- feature_columns(
+  column_categorical_with_vocabulary_list("Sex", vocabulary_list = list("male", "female")),
+  column_categorical_with_vocabulary_list("Embarked", vocabulary_list = list("S", "C", "Q", "")),
+  column_numeric("Pclass")
+)
+```
+
+
+### 2. Choose the model
+
+There are five canned models, or estimators, to choose from:
+
+- linear_regressor 
+- linear_classifier
+- dnn_regressor dnn_classifier
+- dnn_linear_combined_regressor 
+- dnn_linear_combined_classifier
+
+Calling the `linear_classifier()` estimator function starts the constructing the model.  In this step, the only thing passed to the model are the feature columns variable, `cols`
+
+```{r}
+model <- linear_classifier(feature_columns = cols)
+```
+
+### 3. Define the model inputs (response ~ feature columns)
+
+The response and features columns are named as arguments in the `input_fn()` function.  Notice that the variables named in `features` are the same defined in the `cols` variable.
+
+```{r}
+titanic_input_fn <- function(data) {
+  input_fn(data, 
+           features = c("Sex",
+                        "Pclass",
+                        "Embarked"), 
+           response = "Survived")
+}
+```
+
+### 4. Split the data into training and test
+
+In this step, the `titanic_train` data set is split into a train and a test data frames.
+
+```{r}
+library(tidyverse)
+library(titanic)
+```
+
+```{r}
+titanic_set <- titanic_train %>%
+  filter(!is.na(Age))
+
+glimpse(titanic_set)
+```
+
+```{r}
+indices <- sample(1:nrow(titanic_set), size = 0.80 * nrow(titanic_set))
+train <- titanic_set[indices, ]
+test  <- titanic_set[-indices, ]
+```
+
+
+
+### 5. Train the model
+
+This is where all of the previous steps come together.  The `train()` function is used to fit the model.
+
+```{r}
+train(model, titanic_input_fn(train))
+```
+
+Notice that the the **results are not being passed to a variable**. The `train()` function does the following:
+
+1. Fits the model. This is a typical message returned to the console:
+
+```r
+[-] Training -- loss: 26.80, step: 5
+```
+
+2. Returns two plots to the R viewer. 
+
+<img src = "/post/intro-to-tfestimators/tfmodel.png", width = "800", height = "500">
+
+
+3. Saves the results to the file system. The model's path can be found in this attribute: `model$estimator$model_dir`
+
+```{r}
+list.files(model$estimator$model_dir)
+```
+
+### 6. Evaluate the model
+
+The `evaluate()` function tests the model's performance.  Unlike most performance testing functions in R, `evaluate()` makes modifications to the model.  It adds one a sub-folder called `eval` the main model's folder.
+
+```{r}
+model_eval <- evaluate(model, titanic_input_fn(test))
+```
+
+These are the contents of the model's folder after its evaluation.
+
+```{r}
+list.files(model$estimator$model_dir)
+```
+
+The `tidiverse` can be used to make it easier to read the results of the evaluation.  Feel free to use this code to evaluate results from other models.
+
+```{r}
+model_eval %>%
+  flatten() %>%
+  as_tibble() %>%
+  glimpse()
+```
+
+
+### Tensorboard
+
+Tensorboard is a really cool interface included in TensorFlow.  It is an interactive visualization tool that enables the visualization of the TensorFlow graph.  It just needs to be pointed to a model's file path.  If the model has been evaluated, it will provide a way to compare the results too.  Tensorboard deploys in a web browser.  
+
+```{r, eval = FALSE}
+tensorboard(model$estimator$model_dir, launch_browser = TRUE)
+```
+<img src = "/post/intro-to-tfestimators/tensorboard.png", width = "850", height = "400">
+
+
+### 7. Run predictions with the model
+
+The familiar `predict()` function can be used to run predictions.  The only difference is that the data needs to be passed wrapped as an input function, in this case `titanic_input_fn()`.
+
+```{r}
+model_predict <- predict(model, titanic_input_fn(test))
+```
+
+As of today, predictions are returned in a list object. The following `tidyverse` code can be used to review or save the data in a tidy set.
+
+```{r}
+tidy_model <- model_predict %>%
+  map(~ .x %>%
+        map(~.x[[1]]) %>%
+        flatten() %>% 
+        as_tibble()) %>%
+  bind_rows() %>%
+  bind_cols(test)
+
+tidy_model 
+```
+
+## Full code {#fullcode}
+
+Here is the entire script of this article's exercise without any RMarkdown breaks or comments.  This should make it easier to copy it into your environment.
+
+```{r, eval = FALSE}
+library(tfestimators)
+library(tidyverse)
+library(titanic)
+
+cols <- feature_columns(
+  column_categorical_with_vocabulary_list("Sex", vocabulary_list = list("male", "female")),
+  column_categorical_with_vocabulary_list("Embarked", vocabulary_list = list("S", "C", "Q", "")),
+  column_numeric("Pclass")
+)
+model <- linear_classifier(feature_columns = cols)
+
+titanic_set <- titanic_train %>%
+  filter(!is.na(Age))
+
+glimpse(titanic_set)
+indices <- sample(1:nrow(titanic_set), size = 0.80 * nrow(titanic_set))
+train <- titanic_set[indices, ]
+test  <- titanic_set[-indices, ]
+titanic_input_fn <- function(data) {
+  input_fn(data, 
+           features = c("Sex",
+                        "Pclass",
+                        "Embarked"), 
+           response = "Survived")
+}
+
+train(model, titanic_input_fn(train))
+model_eval <- evaluate(model, titanic_input_fn(test))
+model_eval %>%
+  flatten() %>%
+  as_tibble() %>%
+  glimpse()
+
+tensorboard(model$estimator$model_dir, launch_browser = TRUE)
+
+model_predict <- predict(model, titanic_input_fn(test))
+tidy_model <- model_predict %>%
+  map(~ .x %>%
+        map(~.x[[1]]) %>%
+        flatten() %>% 
+        as_tibble()) %>%
+  bind_rows() %>%
+  bind_cols(test)
+
+tidy_model
+```
+
+
+## Further reading
+
+This article is meant as a quick introduction to the code and concepts of TensorFlow with R. For more information, check out these links in the official RStudio TensorFlow site:
+
+- **R Interface to TensorFlow Estimators** - https://tensorflow.rstudio.com/tfestimators/
+
+- **R Interface to Core TensorFlow API** - https://tensorflow.rstudio.com/tensorflow/
+
+- **Estimators examples ** - https://tensorflow.rstudio.com/examples/tfestimators.html

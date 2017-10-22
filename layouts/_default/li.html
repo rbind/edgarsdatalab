@@ -15,7 +15,7 @@
     {{else}}
       {{ printf "%s" .Summary | markdownify }}
     {{ end }}
-    <a href="{{ .Permalink }}" title="{{ .Title }}">Read More…</a>
+    <a href="{{ .Permalink }}" title="{{ .Title }}"><small>Read More…</small></a>
   </div>
 
   <footer>

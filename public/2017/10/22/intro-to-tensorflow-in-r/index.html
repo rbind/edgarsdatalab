@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.26" />
+
+
+
+<link rel="canonical" href="/2017/10/22/intro-to-tensorflow-in-r/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Intro to TensorFlow in R - Edgar&#39;s Data Lab</title>
+    
+<meta name="description" content="TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.Training wheelsTensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm. But even a simple linear regression model has to be built “from scratch” using layers and estimators in TensorFlow.">
+
+<meta property="og:title" content="Intro to TensorFlow in R - Edgar&#39;s Data Lab">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2017/10/22/intro-to-tensorflow-in-r/">
+<meta property="og:image" content="/post/intro-to-tfestimators/tensorboard.png">
+<meta property="og:site_name" content="Edgar&#39;s Data Lab">
+<meta property="og:description" content="TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.Training wheelsTensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm. But even a simple linear regression model has to be built “from scratch” using layers and estimators in TensorFlow.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Edgar&#39;s Data Lab">
+<meta name="twitter:url" content="/2017/10/22/intro-to-tensorflow-in-r/">
+<meta name="twitter:title" content="Intro to TensorFlow in R - Edgar&#39;s Data Lab">
+<meta name="twitter:description" content="TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.Training wheelsTensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm. But even a simple linear regression model has to be built “from scratch” using layers and estimators in TensorFlow.">
+<meta name="twitter:image" content="/post/intro-to-tfestimators/tensorboard.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"/"
+    },
+    "headline": "Intro to TensorFlow in R - Edgar&#39;s Data Lab",
+    "image": {
+      "@type": "ImageObject",
+      "url": "/post/intro-to-tfestimators/tensorboard.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-22T00:00:00JST",
+    "dateModified": "2017-10-22T00:00:00JST",
+    "author": {
+      "@type": "Person",
+      "name": "Edgar&#39;s Data Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Edgar&#39;s Data Lab",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.
+Training wheelsTensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm. But even a simple linear regression model has to be built “from scratch” using layers and estimators in TensorFlow."
+  }
+</script>
+
+
+    <link href="/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-108242418-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Edgar&#39;s Data Lab</a>
+          </div>
+
+          
+          <div id="navbar" class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              <li><a href="https://github.com/edgararuiz/">GitHub</a></li>
+              
+              
+              
+              <li><a href="https://www.linkedin.com/in/edgararuiz/">LinkedIn</a></li>
+              
+              
+              
+              <li><a href="https://twitter.com/theotheredgar/">Twitter</a></li>
+              
+              
+            </ul>
+            
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-9">
+
+
+    <article class="single">
+  <header>
+    
+    <h1 class="title">Intro to TensorFlow in R</h1>
+    
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-22T00:00:00JST">Oct 22, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
+      
+    </ul>
+
+    
+  </header>
+
+  <div class="thumb" style="background-image: url(/post/intro-to-tfestimators/tensorboard.png);"></div>
+
+  <div class="article-body"><p><a href="https://www.tensorflow.org/">TensorFlow</a> is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.</p>
+<div id="training-wheels" class="section level2">
+<h2>Training wheels</h2>
+<p>TensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm. But even a simple linear regression model has to be built “from scratch” using layers and estimators in TensorFlow.</p>
+<p>TensorFlow has a high-level API that provides “canned models” which, in my opinion, lowers the barrier to entry into experimenting with TensorFlow. And of course, R users are now able to access this API via the <a href="https://tensorflow.rstudio.com/tfestimators/">tfestimators</a> package.</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>TensorFlow can be installed in a desktop or laptop. It requires some work that go beyond a simple R package installation. Here are the general steps:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>python</strong> - TensorFlow uses python as its front-end, so it needs be installed prior to it being installed in the computer. For Windows PC’s the recommended python distribution can be downloaded from here: <a href="https://www.anaconda.com/download/#windows" class="uri">https://www.anaconda.com/download/#windows</a></p></li>
+<li><p><strong>RTools (Windows only)</strong> - An additional dependency for Windows is RTools, it can be downloaded here: <a href="https://cran.r-project.org/bin/windows/RTools/" class="uri">https://cran.r-project.org/bin/windows/RTools/</a></p></li>
+<li><p><strong>R dependencies</strong> - There are two packages that need to be installed prior to installing <code>tensorflow</code> and <code>tfestimators</code>.</p>
+<pre class="r"><code>install.packages(&quot;Rcpp&quot;)
+install.packages(&quot;tidyselect&quot;)</code></pre></li>
+<li><p><strong>TF R pacakges</strong> - With all of the dependencies taken care of, the <code>tensorflow</code> and <code>tfestimators</code> packages can be installed. Technically, only <code>tfestimators</code> needs to be installed to complete this exercise.</p>
+<pre class="r"><code>install.packages(&quot;tensorflow&quot;)
+devtools::install_github(&quot;rstudio/tfestimators&quot;)</code></pre></li>
+<li><p><strong>TensorFlow</strong> - Finally, after the R packages are installed, the actual TensorFlow system needs to be installed in the computer. The <code>install_tensorflow()</code> function simplifies this step.</p>
+<pre class="r"><code>install_tensorflow(version = &quot;1.3.0&quot;)</code></pre></li>
+</ol>
+</div>
+<div id="the-model" class="section level2">
+<h2>The model</h2>
+<p>The <code>tfestimators</code> package is the only one that will be loaded into R at this time.</p>
+<pre class="r"><code>library(tfestimators)</code></pre>
+<div id="the-plan" class="section level3">
+<h3>The plan</h3>
+<ol style="list-style-type: decimal">
+<li>Define the feature columns (predictors)</li>
+<li>Choose the model</li>
+<li>Define the model inputs (response ~ feature columns)</li>
+<li>Split the data into training and test</li>
+<li>Train the model</li>
+<li>Evaluate the model</li>
+<li>Run predictions with the model</li>
+</ol>
+<p>In R, most of these steps are usually covered in a single modeling function. And without the Estimators high-level API, these would be even more steps. The overall goal of this exercise is to introduce the workflow, and mindset needed to create Machine Learning applications using TensorFlow.</p>
+<p>Refer to the <a href="#fullcode">full code</a> if you wish to copy and paste it in your computer to follow along or test.</p>
+</div>
+<div id="define-the-feature-columns-predictors" class="section level3">
+<h3>1. Define the feature columns (predictors)</h3>
+<p>Think of <strong>feature columns</strong> as the <strong>predictors</strong> or <strong>terms</strong> of a regular model. In this step, the type, values and other properties of the variable is defined. There are <a href="https://tensorflow.rstudio.com/tfestimators/reference/#section-feature-columns">ten functions</a> in <code>tfestimators</code> that can be used to prepare the definitions:</p>
+<ul>
+<li>column_bucketized</li>
+<li>column_categorical_weighted</li>
+<li>column_categorical_with_hash_bucket</li>
+<li>column_categorical_with_identity</li>
+<li>column_categorical_with_vocabulary_file</li>
+<li>column_categorical_with_vocabulary_list</li>
+<li>column_crossed</li>
+<li>column_embedding</li>
+<li>column_indicator</li>
+<li>column_numeric</li>
+</ul>
+<p>Data from the familiar <code>titanic</code> package is going to be used for this example. Notice that the package, or the data, are not being loaded or called at this time. The reason is to highlight that the columns definition is not evaluated by R or TensorFlow in this step.</p>
+<p>The <em>Sex</em> and <em>Embarked</em> variables will be defined as categorical, and their possible values are set by passing a list to the <code>vocabulary_list</code> argument. The <em>Pclass</em> variable is passed as a numeric feature, so there no further definition.</p>
+<pre class="r"><code>cols &lt;- feature_columns(
+  column_categorical_with_vocabulary_list(&quot;Sex&quot;, vocabulary_list = list(&quot;male&quot;, &quot;female&quot;)),
+  column_categorical_with_vocabulary_list(&quot;Embarked&quot;, vocabulary_list = list(&quot;S&quot;, &quot;C&quot;, &quot;Q&quot;, &quot;&quot;)),
+  column_numeric(&quot;Pclass&quot;)
+)</code></pre>
+</div>
+<div id="choose-the-model" class="section level3">
+<h3>2. Choose the model</h3>
+<p>There are five canned models, or estimators, to choose from:</p>
+<ul>
+<li>linear_regressor</li>
+<li>linear_classifier</li>
+<li>dnn_regressor dnn_classifier</li>
+<li>dnn_linear_combined_regressor</li>
+<li>dnn_linear_combined_classifier</li>
+</ul>
+<p>Calling the <code>linear_classifier()</code> estimator function starts the constructing the model. In this step, the only thing passed to the model are the feature columns variable, <code>cols</code></p>
+<pre class="r"><code>model &lt;- linear_classifier(feature_columns = cols)</code></pre>
+</div>
+<div id="define-the-model-inputs-response-feature-columns" class="section level3">
+<h3>3. Define the model inputs (response ~ feature columns)</h3>
+<p>The response and features columns are named as arguments in the <code>input_fn()</code> function. Notice that the variables named in <code>features</code> are the same defined in the <code>cols</code> variable.</p>
+<pre class="r"><code>titanic_input_fn &lt;- function(data) {
+  input_fn(data, 
+           features = c(&quot;Sex&quot;,
+                        &quot;Pclass&quot;,
+                        &quot;Embarked&quot;), 
+           response = &quot;Survived&quot;)
+}</code></pre>
+</div>
+<div id="split-the-data-into-training-and-test" class="section level3">
+<h3>4. Split the data into training and test</h3>
+<p>In this step, the <code>titanic_train</code> data set is split into a train and a test data frames.</p>
+<pre class="r"><code>library(tidyverse)
+library(titanic)</code></pre>
+<pre class="r"><code>titanic_set &lt;- titanic_train %&gt;%
+  filter(!is.na(Age))
+
+glimpse(titanic_set)</code></pre>
+<pre><code>## Observations: 714
+## Variables: 12
+## $ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16...
+## $ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,...
+## $ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 3,...
+## $ Name        &lt;chr&gt; &quot;Braund, Mr. Owen Harris&quot;, &quot;Cumings, Mrs. John Bra...
+## $ Sex         &lt;chr&gt; &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;mal...
+## $ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, 54, 2, 27, 14, 4, 58, 20, 39, ...
+## $ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 1,...
+## $ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0,...
+## $ Ticket      &lt;chr&gt; &quot;A/5 21171&quot;, &quot;PC 17599&quot;, &quot;STON/O2. 3101282&quot;, &quot;1138...
+## $ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 51.8625,...
+## $ Cabin       &lt;chr&gt; &quot;&quot;, &quot;C85&quot;, &quot;&quot;, &quot;C123&quot;, &quot;&quot;, &quot;E46&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;G6&quot;...
+## $ Embarked    &lt;chr&gt; &quot;S&quot;, &quot;C&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;C&quot;, &quot;S&quot;, ...</code></pre>
+<pre class="r"><code>indices &lt;- sample(1:nrow(titanic_set), size = 0.80 * nrow(titanic_set))
+train &lt;- titanic_set[indices, ]
+test  &lt;- titanic_set[-indices, ]</code></pre>
+</div>
+<div id="train-the-model" class="section level3">
+<h3>5. Train the model</h3>
+<p>This is where all of the previous steps come together. The <code>train()</code> function is used to fit the model.</p>
+<pre class="r"><code>train(model, titanic_input_fn(train))</code></pre>
+<p>Notice that the the <strong>results are not being passed to a variable</strong>. The <code>train()</code> function does the following:</p>
+<ol style="list-style-type: decimal">
+<li>Fits the model. This is a typical message returned to the console:</li>
+</ol>
+<pre class="r"><code>[-] Training -- loss: 26.80, step: 5</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Returns two plots to the R viewer.</li>
+</ol>
+<p><img src = "/post/intro-to-tfestimators/tfmodel.png", width = "800", height = "500"></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Saves the results to the file system. The model’s path can be found in this attribute: <code>model$estimator$model_dir</code></li>
+</ol>
+<pre class="r"><code>list.files(model$estimator$model_dir)</code></pre>
+<pre><code>## [1] &quot;checkpoint&quot;                                    
+## [2] &quot;events.out.tfevents.1508693806.DESKTOP-10DBTVP&quot;
+## [3] &quot;graph.pbtxt&quot;                                   
+## [4] &quot;model.ckpt-1.data-00000-of-00001&quot;              
+## [5] &quot;model.ckpt-1.index&quot;                            
+## [6] &quot;model.ckpt-1.meta&quot;                             
+## [7] &quot;model.ckpt-5.data-00000-of-00001&quot;              
+## [8] &quot;model.ckpt-5.index&quot;                            
+## [9] &quot;model.ckpt-5.meta&quot;</code></pre>
+</div>
+<div id="evaluate-the-model" class="section level3">
+<h3>6. Evaluate the model</h3>
+<p>The <code>evaluate()</code> function tests the model’s performance. Unlike most performance testing functions in R, <code>evaluate()</code> makes modifications to the model. It adds one a sub-folder called <code>eval</code> the main model’s folder.</p>
+<pre class="r"><code>model_eval &lt;- evaluate(model, titanic_input_fn(test))</code></pre>
+<p>These are the contents of the model’s folder after its evaluation.</p>
+<pre class="r"><code>list.files(model$estimator$model_dir)</code></pre>
+<pre><code>##  [1] &quot;checkpoint&quot;                                    
+##  [2] &quot;eval&quot;                                          
+##  [3] &quot;events.out.tfevents.1508693806.DESKTOP-10DBTVP&quot;
+##  [4] &quot;graph.pbtxt&quot;                                   
+##  [5] &quot;model.ckpt-1.data-00000-of-00001&quot;              
+##  [6] &quot;model.ckpt-1.index&quot;                            
+##  [7] &quot;model.ckpt-1.meta&quot;                             
+##  [8] &quot;model.ckpt-5.data-00000-of-00001&quot;              
+##  [9] &quot;model.ckpt-5.index&quot;                            
+## [10] &quot;model.ckpt-5.meta&quot;</code></pre>
+<p>The <code>tidiverse</code> can be used to make it easier to read the results of the evaluation. Feel free to use this code to evaluate results from other models.</p>
+<pre class="r"><code>model_eval %&gt;%
+  flatten() %&gt;%
+  as_tibble() %&gt;%
+  glimpse()</code></pre>
+<pre><code>## Observations: 1
+## Variables: 9
+## $ accuracy             &lt;dbl&gt; 0.7482517
+## $ accuracy_baseline    &lt;dbl&gt; 0.6573427
+## $ auc                  &lt;dbl&gt; 0.8441163
+## $ auc_precision_recall &lt;dbl&gt; 0.8245068
+## $ average_loss         &lt;dbl&gt; 0.5061897
+## $ `label/mean`         &lt;dbl&gt; 0.3426574
+## $ loss                 &lt;dbl&gt; 36.19256
+## $ `prediction/mean`    &lt;dbl&gt; 0.2785905
+## $ global_step          &lt;dbl&gt; 5</code></pre>
+</div>
+<div id="tensorboard" class="section level3">
+<h3>Tensorboard</h3>
+<p>Tensorboard is a really cool interface included in TensorFlow. It is an interactive visualization tool that enables the visualization of the TensorFlow graph. It just needs to be pointed to a model’s file path. If the model has been evaluated, it will provide a way to compare the results too. Tensorboard deploys in a web browser.</p>
+<pre class="r"><code>tensorboard(model$estimator$model_dir, launch_browser = TRUE)</code></pre>
+<p><img src = "/post/intro-to-tfestimators/tensorboard.png", width = "850", height = "400"></p>
+</div>
+<div id="run-predictions-with-the-model" class="section level3">
+<h3>7. Run predictions with the model</h3>
+<p>The familiar <code>predict()</code> function can be used to run predictions. The only difference is that the data needs to be passed wrapped as an input function, in this case <code>titanic_input_fn()</code>.</p>
+<pre class="r"><code>model_predict &lt;- predict(model, titanic_input_fn(test))</code></pre>
+<p>As of today, predictions are returned in a list object. The following <code>tidyverse</code> code can be used to review or save the data in a tidy set.</p>
+<pre class="r"><code>tidy_model &lt;- model_predict %&gt;%
+  map(~ .x %&gt;%
+        map(~.x[[1]]) %&gt;%
+        flatten() %&gt;% 
+        as_tibble()) %&gt;%
+  bind_rows() %&gt;%
+  bind_cols(test)
+
+tidy_model </code></pre>
+<pre><code>## # A tibble: 143 x 17
+##        logits  logistic probabilities class_ids classes PassengerId
+##         &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;   &lt;chr&gt;       &lt;int&gt;
+##  1 -1.7780590 0.1445430     0.8554570         0       0           5
+##  2 -1.7780590 0.1445430     0.8554570         0       0          13
+##  3 -0.6724223 0.3379547     0.6620453         0       0          15
+##  4 -1.4158477 0.1953134     0.8046867         0       0          21
+##  5 -1.0536363 0.2585275     0.7414725         0       0          28
+##  6 -0.5420590 0.3677087     0.6322913         0       0          31
+##  7 -0.6724223 0.3379547     0.6620453         0       0          39
+##  8 -0.1608451 0.4598752     0.5401248         0       0          40
+##  9 -1.7780590 0.1445430     0.8554570         0       0          52
+## 10 -1.7780590 0.1445430     0.8554570         0       0          64
+## # ... with 133 more rows, and 11 more variables: Survived &lt;int&gt;,
+## #   Pclass &lt;int&gt;, Name &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;dbl&gt;, SibSp &lt;int&gt;,
+## #   Parch &lt;int&gt;, Ticket &lt;chr&gt;, Fare &lt;dbl&gt;, Cabin &lt;chr&gt;, Embarked &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="fullcode" class="section level2">
+<h2>Full code</h2>
+<p>Here is the entire script of this article’s exercise without any RMarkdown breaks or comments. This should make it easier to copy it into your environment.</p>
+<pre class="r"><code>library(tfestimators)
+library(tidyverse)
+library(titanic)
+
+cols &lt;- feature_columns(
+  column_categorical_with_vocabulary_list(&quot;Sex&quot;, vocabulary_list = list(&quot;male&quot;, &quot;female&quot;)),
+  column_categorical_with_vocabulary_list(&quot;Embarked&quot;, vocabulary_list = list(&quot;S&quot;, &quot;C&quot;, &quot;Q&quot;, &quot;&quot;)),
+  column_numeric(&quot;Pclass&quot;)
+)
+model &lt;- linear_classifier(feature_columns = cols)
+
+titanic_set &lt;- titanic_train %&gt;%
+  filter(!is.na(Age))
+
+glimpse(titanic_set)
+indices &lt;- sample(1:nrow(titanic_set), size = 0.80 * nrow(titanic_set))
+train &lt;- titanic_set[indices, ]
+test  &lt;- titanic_set[-indices, ]
+titanic_input_fn &lt;- function(data) {
+  input_fn(data, 
+           features = c(&quot;Sex&quot;,
+                        &quot;Pclass&quot;,
+                        &quot;Embarked&quot;), 
+           response = &quot;Survived&quot;)
+}
+
+train(model, titanic_input_fn(train))
+model_eval &lt;- evaluate(model, titanic_input_fn(test))
+model_eval %&gt;%
+  flatten() %&gt;%
+  as_tibble() %&gt;%
+  glimpse()
+
+tensorboard(model$estimator$model_dir, launch_browser = TRUE)
+
+model_predict &lt;- predict(model, titanic_input_fn(test))
+tidy_model &lt;- model_predict %&gt;%
+  map(~ .x %&gt;%
+        map(~.x[[1]]) %&gt;%
+        flatten() %&gt;% 
+        as_tibble()) %&gt;%
+  bind_rows() %&gt;%
+  bind_cols(test)
+
+tidy_model</code></pre>
+</div>
+<div id="further-reading" class="section level2">
+<h2>Further reading</h2>
+<p>This article is meant as a quick introduction to the code and concepts of TensorFlow with R. For more information, check out these links in the official RStudio TensorFlow site:</p>
+<ul>
+<li><p><strong>R Interface to TensorFlow Estimators</strong> - <a href="https://tensorflow.rstudio.com/tfestimators/" class="uri">https://tensorflow.rstudio.com/tfestimators/</a></p></li>
+<li><p><strong>R Interface to Core TensorFlow API</strong> - <a href="https://tensorflow.rstudio.com/tensorflow/" class="uri">https://tensorflow.rstudio.com/tensorflow/</a></p></li>
+<li><p><strong>Estimators examples </strong> - <a href="https://tensorflow.rstudio.com/examples/tfestimators.html" class="uri">https://tensorflow.rstudio.com/examples/tfestimators.html</a></p></li>
+</ul>
+</div>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="/tags/r/">R</a></li>
+          
+          <li><a href="/tags/tensorflow/">TensorFlow</a></li>
+          
+          <li><a href="/tags/tfestimators/">tfestimators</a></li>
+          
+          <li><a href="/tags/tensorboard/">tensorboard</a></li>
+          
+          <li><a href="/tags/sentiment/">Sentiment</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-3">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/2017/10/22/intro-to-tensorflow-in-r/" class="list-group-item">Intro to TensorFlow in R</a>
+      
+      <a href="/2017/09/04/sentiment-analysis-using-tidytext/" class="list-group-item">Sentiment analysis using tidytext</a>
+      
+      <a href="/2016/08/25/publish-to-a-shiny-server/" class="list-group-item">Publish to a Shiny Server</a>
+      
+      <a href="/2016/08/25/setup-a-shiny-server-in-aws/" class="list-group-item">Setup a Shiny Server in AWS</a>
+      
+      <a href="/2016/08/25/infographic-16-years-of-banking-dataand-beyond/" class="list-group-item">[Infographic] 16 years of Banking Data…and beyond</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Top 10 CATEGORIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/categories/data-analysis" class="list-group-item">data-analysis</a>
+      
+      <a href="/categories/how-to-guide" class="list-group-item">how-to-guide</a>
+      
+      <a href="/categories/r-admins" class="list-group-item">r-admins</a>
+      
+      <a href="/categories/server-setup" class="list-group-item">server-setup</a>
+      
+      <a href="/categories/visualization" class="list-group-item">visualization</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Top 10 TAGS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/tags/r" class="list-group-item">r</a>
+      
+      <a href="/tags/ggplot2" class="list-group-item">ggplot2</a>
+      
+      <a href="/tags/arima" class="list-group-item">arima</a>
+      
+      <a href="/tags/banking" class="list-group-item">banking</a>
+      
+      <a href="/tags/rstudio-server" class="list-group-item">rstudio-server</a>
+      
+      <a href="/tags/sentiment" class="list-group-item">sentiment</a>
+      
+      <a href="/tags/shiny-server" class="list-group-item">shiny-server</a>
+      
+      <a href="/tags/twitter" class="list-group-item">twitter</a>
+      
+      <a href="/tags/aws" class="list-group-item">aws</a>
+      
+      <a href="/tags/ec2" class="list-group-item">ec2</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Edgar&#39;s Data Lab</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
