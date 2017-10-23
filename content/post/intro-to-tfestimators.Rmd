@@ -7,7 +7,6 @@ tags:
   - TensorFlow
   - tfestimators
   - tensorboard
-  - Sentiment
 summary: "TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me."
 thumbnail: post/intro-to-tfestimators/tensorboard.png
 ---
