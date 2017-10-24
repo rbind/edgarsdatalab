@@ -30,25 +30,13 @@ TensorFlow has a high-level API that provides "canned models" which, in my opini
 
 ## Setup
 
-TensorFlow can be installed in a desktop or laptop. It requires some work that go beyond a simple R package installation.  Here are the general steps:
+TensorFlow and the R package are needed to use `tfestimators` in your computer or laptop:
 
-1. **python** - TensorFlow uses python as its front-end, so it needs be installed prior to it being installed in the computer.  For Windows PC's the recommended python distribution can be downloaded from here:
-https://www.anaconda.com/download/#windows
-
-1. **RTools (Windows only)** - An additional dependency for Windows is RTools, it can be downloaded here: https://cran.r-project.org/bin/windows/RTools/
-
-1. **R dependencies** - There are two packages that need to be installed prior to installing `tensorflow` and `tfestimators`.
+1. Install `tfestimators` as follows:
 ```r
-install.packages("Rcpp")
-install.packages("tidyselect")
-```
-
-1. **TF R pacakges** - With all of the dependencies taken care of, the `tensorflow` and `tfestimators` packages can be installed. Technically, only `tfestimators` needs to be installed to complete this exercise.
-```r
-install.packages("tensorflow")
 devtools::install_github("rstudio/tfestimators")
 ```
-1. **TensorFlow** - Finally, after the R packages are installed, the actual TensorFlow system needs to be installed in the computer.  The `install_tensorflow()` function simplifies this step.
+1. `tfestimators` comes with a handy function that installs TensorFlow for you:
 ```r
 install_tensorflow(version = "1.3.0")
 ```
