@@ -1,25 +1,20 @@
 
 <aside class="l-sidebar">
 
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
-    </div>
-    <div class="list-group">
-      {{ range first 5 .Site.Pages }}
-      <a href="{{ .Permalink }}" class="list-group-item">{{ .Title }}</a>
-      {{ end }}
-    </div>
-  </section>
-
   {{ range $key, $value := .Site.Taxonomies }}
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">Top 10 {{ $key | upper }}</div>
+      <div class="panel-title">
+        {{if eq $key "tags"}} <i class="fa fa-tag" aria-hidden="true"></i> {{ end }}
+        {{if eq $key "categories"}} <i class="fa fa-folder" aria-hidden="true"></i> {{ end }}
+        <small>Top 10 {{ $key }}</small>
+     </div>
     </div>
     <div class="list-group">
       {{ range first 10 $value.ByCount }}
-      <a href="{{ $.Site.BaseURL}}{{ $key }}/{{ .Name | urlize }}" class="list-group-item">{{ .Name  }}</a>
+      <a href="{{ $.Site.BaseURL}}{{ $key }}/{{ .Name | urlize }}" class="list-group-item">
+        <small>{{ .Name  }}</small>
+      </a>
       {{ end }}
     </div>
   </section>

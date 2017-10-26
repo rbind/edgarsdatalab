@@ -1,0 +1,41 @@
+
+<aside class="l-sidebar">
+
+
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+        Latest
+      </div>
+    </div>
+    <div class="list-group">
+      {{ range first 5 .Site.Pages }}
+      <a href="{{ .Permalink }}" class="list-group-item">
+        <small>{{ .Title }} </small>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        <small>Upcoming Events</small>
+     </div>
+    </div>
+    <div class="list-group">
+      <a href="https://odsc.com/training/portfolio/databases-using-r" class="list-group-item">
+        <small>Databases Using R | Nov 4 | ODSC West</small>
+      </a>
+      <a href="https://www.rstudio.com/conference/" class="list-group-item">
+        <small>Big Data with R | Jan 31 | rstudio::conf</small>
+      </a>
+    </div>
+  </section>
+
+</aside>
+
