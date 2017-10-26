@@ -1,6 +1,25 @@
 
 <aside class="l-sidebar">
 
+
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+        Latest
+      </div>
+    </div>
+    <div class="list-group">
+      {{ range first 5 .Site.Pages }}
+      <a href="{{ .Permalink }}" class="list-group-item">
+        <small>{{ .Title }} </small>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+
+
   <section class="panel panel-default">
     <div class="panel-heading">
       <div class="panel-title">
@@ -17,23 +36,6 @@
       </a>
     </div>
   </section>
-
-
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">
-        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-        Latest
-      </div>
-    </div>
-    <div class="list-group">
-      {{ range first 5 .Site.Pages }}
-      <a href="{{ .Permalink }}" class="list-group-item">{{ .Title }} </a>
-      {{ end }}
-    </div>
-  </section>
-
-
 
 </aside>
 
