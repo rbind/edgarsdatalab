@@ -1,0 +1,83 @@
+---
+title: "Setup an RStudio Server in Ubuntu"
+date: 2017-11-24
+slug: ''
+tags: 
+  - R
+  - RStudio Server
+categories:
+  - R Admins
+  - How-to guide
+  - Server setup
+summary: "A step-by-step guide to setup a Rstudio Server in Ubuntu Linux."
+---
+
+A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux.  The assumption is made that the server is already setup.  There are instructions on how to setup a server in Amazon AWS in the first section of [this article](/2016/08/25/setup-a-shiny-server-in-aws/).
+
+One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install. 
+
+## Core setup
+
+### Install R
+
+Ubuntu defaults to an older version of R. Update the Linux package list so that Ubuntu installs the latest R version. For more info see: https://cran.r-project.org/bin/linux/ubuntu/
+
+```
+sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list'
+gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+gpg -a --export E084DAB9 | sudo apt-key add -
+sudo apt-get update
+```
+
+After the source list is updated, we can proceed and install core R.
+
+```
+sudo apt-get -y install r-base
+sudo apt-get -y install gdebi-core
+```
+
+### Download and Install RStudio Server
+
+To find updated instructions navigate to: https://www.rstudio.com/products/rstudio/download-server/ and select Debian/Ubuntu
+
+```
+wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+sudo gdebi rstudio-server-1.1.383-amd64.deb
+```
+
+Create a default user that can log on RStudio. I’m going to use `rstudio` as the name but it can be whatever you’d like.
+
+```
+sudo adduser rstudio
+## Select and type a password 
+```
+
+## Linux package dependencies (optional)
+
+### tidyverse and sparklyr
+```
+sudo apt-get -y install libcurl4-gnutls-dev
+sudo apt-get -y install libssl-dev
+sudo apt-get -y install libxml2-dev
+```
+### Java (for sparklyr)
+
+The following instructions adds the Java 8 repository, install Java 8 and makes it the default Java version for the server.
+
+```
+sudo apt-add-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get -y install oracle-java8-installer
+sudo apt-get -y install oracle-java8-set-default
+sudo apt-get update
+```
+
+### PDF documentation
+
+Here are the packages needed required to render PDF within R, for package documentation or RMarkdown purposes.
+
+```
+sudo apt-get -y install texinfo
+sudo apt-get -y install texlive-fonts-extra
+sudo apt-get -y install pandoc
+```

@@ -1,0 +1,66 @@
+---
+title: "Setup an RStudio Server in Ubuntu"
+date: 2017-11-24
+slug: ''
+tags: 
+  - R
+  - RStudio Server
+categories:
+  - R Admins
+  - How-to guide
+  - Server setup
+summary: "A step-by-step guide to setup a Rstudio Server in Ubuntu Linux."
+---
+
+
+
+<p>A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of <a href="/2016/08/25/setup-a-shiny-server-in-aws/">this article</a>.</p>
+<p>One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.</p>
+<section id="core-setup" class="level2">
+<h2>Core setup</h2>
+<section id="install-r" class="level3">
+<h3>Install R</h3>
+<p>Ubuntu defaults to an older version of R. Update the Linux package list so that Ubuntu installs the latest R version. For more info see: <a href="https://cran.r-project.org/bin/linux/ubuntu/" class="uri">https://cran.r-project.org/bin/linux/ubuntu/</a></p>
+<pre><code>sudo sh -c &#39;echo &quot;deb http://cran.rstudio.com/bin/linux/ubuntu xenial/&quot; &gt;&gt; /etc/apt/sources.list&#39;
+gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+gpg -a --export E084DAB9 | sudo apt-key add -
+sudo apt-get update</code></pre>
+<p>After the source list is updated, we can proceed and install core R.</p>
+<pre><code>sudo apt-get -y install r-base
+sudo apt-get -y install gdebi-core</code></pre>
+</section>
+<section id="download-and-install-rstudio-server" class="level3">
+<h3>Download and Install RStudio Server</h3>
+<p>To find updated instructions navigate to: <a href="https://www.rstudio.com/products/rstudio/download-server/" class="uri">https://www.rstudio.com/products/rstudio/download-server/</a> and select Debian/Ubuntu</p>
+<pre><code>wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+sudo gdebi rstudio-server-1.1.383-amd64.deb</code></pre>
+<p>Create a default user that can log on RStudio. I’m going to use <code>rstudio</code> as the name but it can be whatever you’d like.</p>
+<pre><code>sudo adduser rstudio
+## Select and type a password </code></pre>
+</section>
+</section>
+<section id="linux-package-dependencies-optional" class="level2">
+<h2>Linux package dependencies (optional)</h2>
+<section id="tidyverse-and-sparklyr" class="level3">
+<h3>tidyverse and sparklyr</h3>
+<pre><code>sudo apt-get -y install libcurl4-gnutls-dev
+sudo apt-get -y install libssl-dev
+sudo apt-get -y install libxml2-dev</code></pre>
+</section>
+<section id="java-for-sparklyr" class="level3">
+<h3>Java (for sparklyr)</h3>
+<p>The following instructions adds the Java 8 repository, install Java 8 and makes it the default Java version for the server.</p>
+<pre><code>sudo apt-add-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get -y install oracle-java8-installer
+sudo apt-get -y install oracle-java8-set-default
+sudo apt-get update</code></pre>
+</section>
+<section id="pdf-documentation" class="level3">
+<h3>PDF documentation</h3>
+<p>Here are the packages needed required to render PDF within R, for package documentation or RMarkdown purposes.</p>
+<pre><code>sudo apt-get -y install texinfo
+sudo apt-get -y install texlive-fonts-extra
+sudo apt-get -y install pandoc</code></pre>
+</section>
+</section>

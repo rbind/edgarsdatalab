@@ -13,7 +13,7 @@
     <div class="list-group">
       {{ range first 10 $value.ByCount }}
       <a href="{{ $.Site.BaseURL}}{{ $key }}/{{ .Name | urlize }}" class="list-group-item">
-        <small>{{ .Name  }}</small>
+        <small>{{ humanize .Name  }}</small>
       </a>
       {{ end }}
     </div>

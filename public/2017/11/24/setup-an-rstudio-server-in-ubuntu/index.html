@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.29" />
+
+
+
+<link rel="canonical" href="/2017/11/24/setup-an-rstudio-server-in-ubuntu/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Setup an RStudio Server in Ubuntu - Edgar&#39;s Data Lab</title>
+    
+<meta name="description" content="A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of this article.One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.Core setupInstall RUbuntu defaults to an older version of R.">
+
+<meta property="og:title" content="Setup an RStudio Server in Ubuntu - Edgar&#39;s Data Lab">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2017/11/24/setup-an-rstudio-server-in-ubuntu/">
+<meta property="og:image" content="/images/default.png">
+<meta property="og:site_name" content="Edgar&#39;s Data Lab">
+<meta property="og:description" content="A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of this article.One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.Core setupInstall RUbuntu defaults to an older version of R.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Edgar&#39;s Data Lab">
+<meta name="twitter:url" content="/2017/11/24/setup-an-rstudio-server-in-ubuntu/">
+<meta name="twitter:title" content="Setup an RStudio Server in Ubuntu - Edgar&#39;s Data Lab">
+<meta name="twitter:description" content="A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of this article.One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.Core setupInstall RUbuntu defaults to an older version of R.">
+<meta name="twitter:image" content="/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"/"
+    },
+    "headline": "Setup an RStudio Server in Ubuntu - Edgar&#39;s Data Lab",
+    "image": {
+      "@type": "ImageObject",
+      "url": "/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-24T00:00:00JST",
+    "dateModified": "2017-11-24T00:00:00JST",
+    "author": {
+      "@type": "Person",
+      "name": "Edgar&#39;s Data Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Edgar&#39;s Data Lab",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of this article.
+One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.
+Core setupInstall RUbuntu defaults to an older version of R."
+  }
+</script>
+
+
+    <link href="/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-108242418-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Edgar&#39;s Data Lab</a>
+          </div>
+
+          
+          <div id="navbar" class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              <li><a href="https://github.com/edgararuiz/">GitHub</a></li>
+              
+              
+              
+              <li><a href="https://www.linkedin.com/in/edgararuiz/">LinkedIn</a></li>
+              
+              
+              
+              <li><a href="https://twitter.com/theotheredgar/">Twitter</a></li>
+              
+              
+            </ul>
+            
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-9">
+
+
+    <article class="single">
+  <header>
+    
+    <h1 class="title">Setup an RStudio Server in Ubuntu</h1>
+    
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-24T00:00:00JST">Nov 24, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
+      
+    </ul>
+
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of <a href="/2016/08/25/setup-a-shiny-server-in-aws/">this article</a>.</p>
+<p>One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.</p>
+<section id="core-setup" class="level2">
+<h2>Core setup</h2>
+<section id="install-r" class="level3">
+<h3>Install R</h3>
+<p>Ubuntu defaults to an older version of R. Update the Linux package list so that Ubuntu installs the latest R version. For more info see: <a href="https://cran.r-project.org/bin/linux/ubuntu/" class="uri">https://cran.r-project.org/bin/linux/ubuntu/</a></p>
+<pre><code>sudo sh -c &#39;echo &quot;deb http://cran.rstudio.com/bin/linux/ubuntu xenial/&quot; &gt;&gt; /etc/apt/sources.list&#39;
+gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+gpg -a --export E084DAB9 | sudo apt-key add -
+sudo apt-get update</code></pre>
+<p>After the source list is updated, we can proceed and install core R.</p>
+<pre><code>sudo apt-get -y install r-base
+sudo apt-get -y install gdebi-core</code></pre>
+</section>
+<section id="download-and-install-rstudio-server" class="level3">
+<h3>Download and Install RStudio Server</h3>
+<p>To find updated instructions navigate to: <a href="https://www.rstudio.com/products/rstudio/download-server/" class="uri">https://www.rstudio.com/products/rstudio/download-server/</a> and select Debian/Ubuntu</p>
+<pre><code>wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+sudo gdebi rstudio-server-1.1.383-amd64.deb</code></pre>
+<p>Create a default user that can log on RStudio. I’m going to use <code>rstudio</code> as the name but it can be whatever you’d like.</p>
+<pre><code>sudo adduser rstudio
+## Select and type a password </code></pre>
+</section>
+</section>
+<section id="linux-package-dependencies-optional" class="level2">
+<h2>Linux package dependencies (optional)</h2>
+<section id="tidyverse-and-sparklyr" class="level3">
+<h3>tidyverse and sparklyr</h3>
+<pre><code>sudo apt-get -y install libcurl4-gnutls-dev
+sudo apt-get -y install libssl-dev
+sudo apt-get -y install libxml2-dev</code></pre>
+</section>
+<section id="java-for-sparklyr" class="level3">
+<h3>Java (for sparklyr)</h3>
+<p>The following instructions adds the Java 8 repository, install Java 8 and makes it the default Java version for the server.</p>
+<pre><code>sudo apt-add-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get -y install oracle-java8-installer
+sudo apt-get -y install oracle-java8-set-default
+sudo apt-get update</code></pre>
+</section>
+<section id="pdf-documentation" class="level3">
+<h3>PDF documentation</h3>
+<p>Here are the packages needed required to render PDF within R, for package documentation or RMarkdown purposes.</p>
+<pre><code>sudo apt-get -y install texinfo
+sudo apt-get -y install texlive-fonts-extra
+sudo apt-get -y install pandoc</code></pre>
+</section>
+</section>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="/categories/r-admins/">R Admins</a></li>
+          
+          <li><a href="/categories/how-to-guide/">How-to guide</a></li>
+          
+          <li><a href="/categories/server-setup/">Server setup</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="/tags/r/">R</a></li>
+          
+          <li><a href="/tags/rstudio-server/">RStudio Server</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-3">
+    
+<aside class="l-sidebar">
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        
+         <i class="fa fa-folder" aria-hidden="true"></i> 
+        <small>Top 10 categories</small>
+     </div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/categories/how-to-guide" class="list-group-item">
+        <small>How to guide</small>
+      </a>
+      
+      <a href="/categories/r-admins" class="list-group-item">
+        <small>R admins</small>
+      </a>
+      
+      <a href="/categories/server-setup" class="list-group-item">
+        <small>Server setup</small>
+      </a>
+      
+      <a href="/categories/data-analysis" class="list-group-item">
+        <small>Data analysis</small>
+      </a>
+      
+      <a href="/categories/visualization" class="list-group-item">
+        <small>Visualization</small>
+      </a>
+      
+      <a href="/categories/presentation" class="list-group-item">
+        <small>Presentation</small>
+      </a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+         <i class="fa fa-tag" aria-hidden="true"></i> 
+        
+        <small>Top 10 tags</small>
+     </div>
+    </div>
+    <div class="list-group">
+      
+      <a href="/tags/r" class="list-group-item">
+        <small>R</small>
+      </a>
+      
+      <a href="/tags/ggplot2" class="list-group-item">
+        <small>Ggplot2</small>
+      </a>
+      
+      <a href="/tags/rstudio-server" class="list-group-item">
+        <small>Rstudio server</small>
+      </a>
+      
+      <a href="/tags/arima" class="list-group-item">
+        <small>Arima</small>
+      </a>
+      
+      <a href="/tags/banking" class="list-group-item">
+        <small>Banking</small>
+      </a>
+      
+      <a href="/tags/shiny-server" class="list-group-item">
+        <small>Shiny server</small>
+      </a>
+      
+      <a href="/tags/twitter" class="list-group-item">
+        <small>Twitter</small>
+      </a>
+      
+      <a href="/tags/aws" class="list-group-item">
+        <small>Aws</small>
+      </a>
+      
+      <a href="/tags/databases" class="list-group-item">
+        <small>Databases</small>
+      </a>
+      
+      <a href="/tags/ec2" class="list-group-item">
+        <small>Ec2</small>
+      </a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Edgar&#39;s Data Lab</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

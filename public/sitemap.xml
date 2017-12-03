@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2017/11/24/setup-an-rstudio-server-in-ubuntu/</loc>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/11/04/databases-using-r---odsc-west---materials/</loc>
+    <lastmod>2017-11-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/10/22/intro-to-tensorflow-in-r/</loc>
     <lastmod>2017-10-22T00:00:00+00:00</lastmod>
   </url>
@@ -62,6 +72,12 @@
   </url>
   
   <url>
+    <loc>/tags/databases/</loc>
+    <lastmod>2017-11-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/ec2/</loc>
     <lastmod>2016-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -69,7 +85,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-10-22T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,31 +103,37 @@
   
   <url>
     <loc>/categories/how-to-guide/</loc>
-    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-10-22T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/presentation/</loc>
+    <lastmod>2017-11-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2017-10-22T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r-admins/</loc>
-    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/rstudio-server/</loc>
-    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -129,7 +151,7 @@
   
   <url>
     <loc>/categories/server-setup/</loc>
-    <lastmod>2016-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
