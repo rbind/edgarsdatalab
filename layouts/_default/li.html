@@ -7,17 +7,17 @@
       </ul>
 
   </header>
-
+  <div call = "panel-title">
   {{ with .Params.thumbnail }}<a href="{{ $.Permalink }}" class="thumb" title="{{ $.Title }}" style="background-image: url({{ $.Site.BaseURL }}{{ . }});"></a>{{ end }}
-  <div class="summary">
+  
     {{ if and (isset .Params "summary") (not (eq .Params.summary "")) }}
       {{ printf "%s" .Params.summary | markdownify }}
     {{else}}
       {{ printf "%s" .Summary | markdownify }}
     {{ end }}
     <a href="{{ .Permalink }}" title="{{ .Title }}"><small>Read More…</small></a>
+  
   </div>
-
   <footer>
       <ul class="p-facts">
         <li></li><i class="fa fa-tags" aria-hidden="true"></i></li>
