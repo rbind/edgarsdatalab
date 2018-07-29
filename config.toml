@@ -1,7 +1,7 @@
 baseurl = "/"
 languageCode = "en-us"
 title = "Edgar's Data Lab"
-theme = "hugo_theme_beg"
+theme = "slate"
 features = ["responsive", "thumbnail", "syntax highlight", "structured data", "ogp", "twitter cards"]
 googleAnalytics = "UA-108242418-1"
 disqusShortname = ""
@@ -24,7 +24,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
     description = "A website built through Hugo and blogdown."
-
+    
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.11.0"
     highlightjsCDN = "//cdn.bootcss.com"
@@ -39,4 +39,33 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     width = 50
     height = 50
     alt = "Logo"
+    
+[[ params.nav ]]
+name = "Server"
+tag = "admins"
+icon = "server"
 
+[[ params.nav ]]
+name = "business"
+tag = "business"
+icon = "black-tie"
+
+[[ params.nav ]]
+name = "visualizations"
+tag = "visualizations"
+icon = "bar-chart"
+
+[[ params.nav ]]
+name = "Guides"
+tag = "guides"
+icon = "list-alt"
+
+[[ params.nav ]]
+name = "Webinars"
+tag = "webinars"
+icon = "film"
+
+[[ params.nav ]]
+name = "Presentations"
+tag = "presentations"
+icon = "group"

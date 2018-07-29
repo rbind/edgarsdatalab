@@ -1,0 +1,23 @@
+<html>
+  <head>
+      <title>{{ .Title }}</title>{{ if .Site.Params.Favicon }}
+      <link rel="shortcut icon" href="{{ .Site.Params.Favicon }}">{{ end }}
+      <link rel="stylesheet" href="css/slate.css">
+      <link rel="stylesheet" href="css/homepage.css">
+  </head>
+
+  <h1>{{ .Title }}</h1>
+
+  <body{{ if .Site.Params.BackgroundStyle }} style='background: {{ .Site.Params.BackgroundStyle | safeCSS }};'{{ end }}
+{{- if .Site.Params.BackgroundImages }} data-backgrounds='{{ range .Site.Params.BackgroundImages }}{{ . }},{{ end }}'{{- end }}>
+    <div>
+      {{ partial "nav.html" . }}      
+    </div>
+    <div class="container">
+      {{ partial "tile_slate.html" . }}
+    </div>
+
+  </body>
+  <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+  <script src="js/slate.js"></script>
+</html>

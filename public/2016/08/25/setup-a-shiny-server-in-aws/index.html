@@ -1,438 +1,43 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-<meta name="pinterest" content="nopin">
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.29" />
+<head>
+<link rel="stylesheet" href="css/slate.css">
+<title>slate</title>
+</head>
 
+<body>
 
-
-<link rel="canonical" href="/2016/08/25/setup-a-shiny-server-in-aws/">
-
-
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>Setup a Shiny Server in AWS - Edgar&#39;s Data Lab</title>
-    
-<meta name="description" content="The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.">
-
-<meta property="og:title" content="Setup a Shiny Server in AWS - Edgar&#39;s Data Lab">
-<meta property="og:type" content="article">
-<meta property="og:url" content="/2016/08/25/setup-a-shiny-server-in-aws/">
-<meta property="og:image" content="/images/default.png">
-<meta property="og:site_name" content="Edgar&#39;s Data Lab">
-<meta property="og:description" content="The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.">
-<meta property="og:locale" content="ja_JP">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="Edgar&#39;s Data Lab">
-<meta name="twitter:url" content="/2016/08/25/setup-a-shiny-server-in-aws/">
-<meta name="twitter:title" content="Setup a Shiny Server in AWS - Edgar&#39;s Data Lab">
-<meta name="twitter:description" content="The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.">
-<meta name="twitter:image" content="/images/default.png">
-
-
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "NewsArticle",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id":"/"
-    },
-    "headline": "Setup a Shiny Server in AWS - Edgar&#39;s Data Lab",
-    "image": {
-      "@type": "ImageObject",
-      "url": "/images/default.png",
-      "height": 800,
-      "width": 800
-    },
-    "datePublished": "2016-08-25T00:00:00JST",
-    "dateModified": "2016-08-25T00:00:00JST",
-    "author": {
-      "@type": "Person",
-      "name": "Edgar&#39;s Data Lab"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Edgar&#39;s Data Lab",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "/images/logo.png",
-        "width": 600,
-        "height": 60
-      }
-    },
-    "description": "The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:
-Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS."
-  }
-</script>
-
-
-    <link href="/css/styles.css" rel="stylesheet">
-    
-
-  </head>
-
-  <body>
-    
-    
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-108242418-1', 'auto');
-ga('send', 'pageview');
-</script>
-
-    
-
-    <header class="l-header">
-      <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Edgar&#39;s Data Lab</a>
-          </div>
-
-          
-          <div id="navbar" class="collapse navbar-collapse">
-            
-            <ul class="nav navbar-nav navbar-right">
-              
-              
-              <li><a href="https://github.com/edgararuiz/">GitHub</a></li>
-              
-              
-              
-              <li><a href="https://www.linkedin.com/in/edgararuiz/">LinkedIn</a></li>
-              
-              
-              
-              <li><a href="https://twitter.com/theotheredgar/">Twitter</a></li>
-              
-              
-            </ul>
-            
-          </div>
-          
-
-        </div>
-      </nav>
-    </header>
-
-    <main>
-      <div class="container">
-        
-<div class="row">
-  <div class="col-md-9">
-
-
-    <article class="single">
-  <header>
-    
-    <h1 class="title">Setup a Shiny Server in AWS</h1>
-    
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2016-08-25T00:00:00JST">Aug 25, 2016</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
-      
-    </ul>
-
-    
-  </header>
-
-  
-
-  <div class="article-body"><p>The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:</p>
-<ol style="list-style-type: decimal">
-<li>Setup a server, or EC2 instance, in AWS</li>
-<li>Install R, Shiny Server and RStudio Server</li>
-<li>Pre-install dependencies packages</li>
-<li>Publish a test app</li>
-</ol>
-<div id="setup-the-ec2-instances-servers-in-aws" class="section level2">
-<h2>Setup the EC2 Instances (Servers) in AWS</h2>
-<p>The purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS. Please feel free to skip, or skim, if you are already familiar with the process.</p>
-<ol style="list-style-type: decimal">
-<li><strong>Amazon Machine Instance:</strong> Ubuntu</li>
-<li><strong>Instance Type:</strong> m4.large</li>
-<li><strong>Storage:</strong> 30 Size GiB</li>
-<li><strong>Security Group Name:</strong> Shiny</li>
-<li>Click <strong>Add Rule</strong>, select <strong>Type:</strong> All Trafic, <strong>Source:</strong> My IP</li>
-<li><em>Optional: If you want to open your Shiny server to the world:</em> Click <strong>Add Rule</strong>, select <strong>Type:</strong> Custom TCP Rule, <strong>Port Range:</strong> 3838, <strong>Source:</strong> Anywhere</li>
-<li><em>Optional: If you plan to have to publish apps from a RStudio server within your “local” AWS network (VPC):</em> Click <strong>Add Rule</strong>, select <strong>Type:</strong> All Traffic, <strong>Source:</strong> Custom and type the the first two numbers in the IP address followed by ‘.0.0/16’ (e.g.: If the Shiny server’s AWS internal IP address is 172.31.2.200 then you’d enter 172.31.0.0/16 This gives every server in your VPC access to your Shiny server and to each other). See <a href="/2016/08/25/publish-to-a-shiny-server/">Publish to a Shiny Server</a> after completing this guide</li>
-<li>After clicking <strong>Launch</strong>, the “Select existing pair or create a new pair” screen will appear, select: <strong>Create a new pairKey pair name</strong>, and name it <strong>shiny</strong></li>
-<li>Click <strong>Download Key Pair</strong></li>
-<li>Save the file</li>
-<li>Click <strong>Launch Instances</strong></li>
-<li>Go to the Instances section in the EC2 Dashboard section and click on the new instance</li>
-<li>Copy the <em>Public DNS address</em>, from here on we’ll refer to it as <em>MY_PUBLIC_DNS</em></li>
-</ol>
-<div id="connecting-to-the-server" class="section level3">
-<h3>Connecting to the Server</h3>
-<p>The Ubuntu Server installation does not have a GUI that the Destktop version provides. This means that the only way to make changes to the server is by starting a Terminal (black screen) session with the EC2 server. AWS provides the step-by-step instructions for this part:</p>
-<p><strong>Windows</strong> – <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html" class="uri">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html</a>. Complete sections <em>Converting Your Private Key Using PuTTYgen</em> and <em>Starting a PuTTY Session</em></p>
-<p><strong>Non-Windows</strong> – <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html" class="uri">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html</a>. Only go through the instructions in the To connect to your instance using SSH section Shiny server configuration</p>
-</div>
-</div>
-<div id="install-r" class="section level2">
-<h2>Install R</h2>
-<p><strong>Tip: </strong> The terminal commands inside the boxes can be copied and pasted into your terminal session. In putty you can use right-click as the “paste” command.</p>
-<ul>
-<li><p>Ubuntu defaults to an older version of R. Update the Linux package list so that Ubuntu installs the latest R version. For more info see: <a href="https://cran.r-project.org/bin/linux/ubuntu/" class="uri">https://cran.r-project.org/bin/linux/ubuntu/</a></p>
-<pre class="bash"><code>sudo sh -c &#39;echo &quot;deb http://cran.rstudio.com/bin/linux/ubuntu xenial/&quot; &gt;&gt; /etc/apt/sources.list&#39;
-gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
-gpg -a --export E084DAB9 | sudo apt-key add -
-sudo apt-get update</code></pre></li>
-<li><p>Install R</p>
-<pre class="bash"><code>sudo apt-get install r-base</code></pre></li>
-</ul>
-</div>
-<div id="install-shiny" class="section level2">
-<h2>Install Shiny</h2>
-<p>The instructions below install the current version of Shiny Server. To find updated instructions navigate to: <a href="https://www.rstudio.com/products/shiny/download-server/" class="uri">https://www.rstudio.com/products/shiny/download-server/</a> and select Ubuntu 12.04 or later</p>
-<pre class="bash"><code>sudo su - -c &quot;R -e \&quot;install.packages(&#39;shiny&#39;, repos=&#39;https://cran.rstudio.com/&#39;)\&quot;&quot;
-sudo apt-get install gdebi-core
-wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.5.872-amd64.deb
-sudo gdebi shiny-server-1.5.5.872-amd64.deb
-</code></pre>
-</div>
-<div id="install-rstudio" class="section level2">
-<h2>Install RStudio</h2>
-<p><strong>Why install RStudio Server along Shiny Server?</strong> The RStudio Server provides a web browser-based interface that looks just like the local RStudio Desktop. In this case, the RStudio Server will be used to upload the app and its dependencies. It will also allow testing of the app inside the RStudio IDE. This removes the need to setup complicated security and FTP. To find updated instructions navigate to: <a href="https://www.rstudio.com/products/rstudio/download-server/" class="uri">https://www.rstudio.com/products/rstudio/download-server/</a> and select <strong>Debian/Ubuntu</strong></p>
-<pre class="bash"><code>wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
-sudo gdebi rstudio-server-1.1.383-amd64.deb</code></pre>
-</div>
-<div id="setup-an-admin-user" class="section level2">
-<h2>Setup an admin user</h2>
-<p>A new Linux user needs to be setup that can logon to RStudio Server and also has sufficient rights to save to the Shiny Server’s apps folder.</p>
-<ul>
-<li><p>Create a default user that can log on RStudio. I’m going to use ‘rstudio’ as the name but it can be whatever you’d like.</p>
-<pre class="bash"><code>sudo adduser rstudio
-## Select and type a password </code></pre></li>
-<li><p>Give the new user ‘sudo’ (read Admin) access to the server.</p>
-<pre class="bash"><code>sudo usermod -aG sudo rstudio</code></pre></li>
-<li><p>This command is key, it makes it where you don’t have to type ‘sudo’ before any file/folder command. This command makes it possible for RStudio to create new folders and files in the Shiny Server apps folder</p>
-<pre class="bash"><code>sudo chown rstudio /srv/shiny-server/</code></pre></li>
-</ul>
-</div>
-<div id="pre-install-packages" class="section level2">
-<h2>Pre-install packages</h2>
-<p>Some popular R packages depend on Linux packages that are usually not installed by default. Install the following Linux packages:</p>
-<pre class="bash"><code>sudo apt-get -y install libcurl4-gnutls-dev
-sudo apt-get -y install libssl-dev
-sudo apt-get -y install libxml2-dev</code></pre>
-<p>Any package that a ‘Shiny App’ uses will need to be pre-installed, or the app will crash. Here are a few we will load before we start using the server. If you need any other package, just follow the instruction pattern, replacing the name of the desired package. You can always install more packages later via a terminal session</p>
-<pre class="bash"><code>sudo su - -c &quot;R -e \&quot;install.packages(&#39;tidyverse&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;stats&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;flexdashboard&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;
-sudo su - -c &quot;R -e \&quot;install.packages(&#39;shinydashboard&#39;, repos=&#39;http://cran.us.r-project.org&#39;)\&quot;&quot;</code></pre>
-<div id="test-server-connnectivity" class="section level3">
-<h3>Test server connnectivity</h3>
-<p>To confirm the Shiny server is working go to: <a href="http://MY_PUBLIC_DNS:3838/" class="uri">http://MY_PUBLIC_DNS:3838/</a> To confirm the RStudio server is working go to: <a href="http://MY_PUBLIC_DNS:8787/" class="uri">http://MY_PUBLIC_DNS:8787/</a></p>
-</div>
-</div>
-<div id="publishing-apps" class="section level2">
-<h2>Publishing apps</h2>
-<div id="publishing-from-within-the-rstudio-server" class="section level3">
-<h3>Publishing from within the RStudio Server</h3>
-<ol style="list-style-type: decimal">
-<li>Navigate to the RStudio server: <a href="http://MY_PUBLIC_DNS:8787/" class="uri">http://MY_PUBLIC_DNS:8787/</a></li>
-<li>Log on as ‘<em>rstudio</em>’</li>
-<li>Confirm that the latest version of R is loaded (As of today is 3.4.2)</li>
-<li>Click File – New File – Shiny Web App</li>
-<li>Application Name: my_test</li>
-<li>Click Browse</li>
-<li>Click on the Go to directory button, identified as […]</li>
-<li>Type the following (exactly as is in here): /srv/shiny-server/</li>
-<li>Click Choose and then click Create</li>
-<li>Navigate to your new app by going to: <a href="http://MY_PUBLIC_DNS:3838/my_test" class="uri">http://MY_PUBLIC_DNS:3838/my_test</a></li>
-</ol>
-</div>
-</div>
-</div>
-
-  <footer class="article-footer">
-    
-    
-    
-    <section class="bordered">
-      <header>
-        <div class="panel-title">CATEGORIES</div>
-      </header>
-      <div>
-        <ul class="p-terms">
-          
-          <li><a href="/categories/r-admins/">R Admins</a></li>
-          
-          <li><a href="/categories/how-to-guide/">How-to guide</a></li>
-          
-          <li><a href="/categories/server-setup/">Server setup</a></li>
-          
+<div class="nav-panel">
+    <nav>
+        <ul>
+            <li class="tag"><a href="#"><i class="icon fa fa-chevron-right" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="icon fa fa-star" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="icon fa fa-dot-circle-o" aria-hidden="true"></i></a></li>
         </ul>
-      </div>
-    </section>
-    
-    
-    
-    <section class="bordered">
-      <header>
-        <div class="panel-title">TAGS</div>
-      </header>
-      <div>
-        <ul class="p-terms">
-          
-          <li><a href="/tags/r/">R</a></li>
-          
-          <li><a href="/tags/shiny-server/">Shiny Server</a></li>
-          
-          <li><a href="/tags/rstudio-server/">RStudio Server</a></li>
-          
-          <li><a href="/tags/ec2/">EC2</a></li>
-          
-          <li><a href="/tags/aws/">AWS</a></li>
-          
-        </ul>
-      </div>
-    </section>
-    
-    
-  </footer>
-
-</article>
-
-
-    
-  </div>
-
-  <div class="col-md-3">
-    
-<aside class="l-sidebar">
-
-  
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">
-        
-         <i class="fa fa-folder" aria-hidden="true"></i> 
-        <small>Top 10 categories</small>
-     </div>
-    </div>
-    <div class="list-group">
-      
-      <a href="/categories/how-to-guide" class="list-group-item">
-        <small>How to guide</small>
-      </a>
-      
-      <a href="/categories/r-admins" class="list-group-item">
-        <small>R admins</small>
-      </a>
-      
-      <a href="/categories/server-setup" class="list-group-item">
-        <small>Server setup</small>
-      </a>
-      
-      <a href="/categories/data-analysis" class="list-group-item">
-        <small>Data analysis</small>
-      </a>
-      
-      <a href="/categories/visualization" class="list-group-item">
-        <small>Visualization</small>
-      </a>
-      
-      <a href="/categories/presentation" class="list-group-item">
-        <small>Presentation</small>
-      </a>
-      
-    </div>
-  </section>
-  
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">
-         <i class="fa fa-tag" aria-hidden="true"></i> 
-        
-        <small>Top 10 tags</small>
-     </div>
-    </div>
-    <div class="list-group">
-      
-      <a href="/tags/r" class="list-group-item">
-        <small>R</small>
-      </a>
-      
-      <a href="/tags/ggplot2" class="list-group-item">
-        <small>Ggplot2</small>
-      </a>
-      
-      <a href="/tags/rstudio-server" class="list-group-item">
-        <small>Rstudio server</small>
-      </a>
-      
-      <a href="/tags/arima" class="list-group-item">
-        <small>Arima</small>
-      </a>
-      
-      <a href="/tags/banking" class="list-group-item">
-        <small>Banking</small>
-      </a>
-      
-      <a href="/tags/shiny-server" class="list-group-item">
-        <small>Shiny server</small>
-      </a>
-      
-      <a href="/tags/twitter" class="list-group-item">
-        <small>Twitter</small>
-      </a>
-      
-      <a href="/tags/aws" class="list-group-item">
-        <small>Aws</small>
-      </a>
-      
-      <a href="/tags/databases" class="list-group-item">
-        <small>Databases</small>
-      </a>
-      
-      <a href="/tags/ec2" class="list-group-item">
-        <small>Ec2</small>
-      </a>
-      
-    </div>
-  </section>
-  
-
-</aside>
-
-
-  </div>
+    </nav>
 </div>
 
-      </div>
-    </main>
+<div class="container">
+    <div class="tile-container">
+        <a class="tile tile-link" href="#one">
+            <div class="tile-box">One</div>
+            <div class="tile-title">One</div>
+        </a>
+        <a class="tile tile-link" href="#two">
+            <div class="tile-box">Two</div>
+            <div class="tile-title">Two</div>
+        </a>
+        <a class="tile tile-link" href="#">
+            <div class="tile-box">Three</div>
+            <div class="tile-title">Three</div>
+        </a>
+        <a class="tile tile-link" href="#">
+            <div class="tile-box">Four</div>
+            <div class="tile-title">Four</div>
+        </a>
+    </div>
+</div>
 
-    <footer class="l-footer">
-      <div class="container">
-        <p><span class="h-logo">&copy; Edgar&#39;s Data Lab</span></p>
-        <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-        </aside>
-      </div>
-    </footer>
-
-    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-  </body>
+</body>
+<link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+<script src="js/slate.js"></script>
 </html>
-

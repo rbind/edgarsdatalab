@@ -1,386 +1,43 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-<meta name="pinterest" content="nopin">
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.29" />
+<head>
+<link rel="stylesheet" href="css/slate.css">
+<title>slate</title>
+</head>
 
+<body>
 
-
-<link rel="canonical" href="/2016/08/25/publish-to-a-shiny-server/">
-
-
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>Publish to a Shiny Server - Edgar&#39;s Data Lab</title>
-    
-<meta name="description" content="The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.The plan is to:Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command">
-
-<meta property="og:title" content="Publish to a Shiny Server - Edgar&#39;s Data Lab">
-<meta property="og:type" content="article">
-<meta property="og:url" content="/2016/08/25/publish-to-a-shiny-server/">
-<meta property="og:image" content="/images/default.png">
-<meta property="og:site_name" content="Edgar&#39;s Data Lab">
-<meta property="og:description" content="The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.The plan is to:Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command">
-<meta property="og:locale" content="ja_JP">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="Edgar&#39;s Data Lab">
-<meta name="twitter:url" content="/2016/08/25/publish-to-a-shiny-server/">
-<meta name="twitter:title" content="Publish to a Shiny Server - Edgar&#39;s Data Lab">
-<meta name="twitter:description" content="The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.The plan is to:Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command">
-<meta name="twitter:image" content="/images/default.png">
-
-
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "NewsArticle",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id":"/"
-    },
-    "headline": "Publish to a Shiny Server - Edgar&#39;s Data Lab",
-    "image": {
-      "@type": "ImageObject",
-      "url": "/images/default.png",
-      "height": 800,
-      "width": 800
-    },
-    "datePublished": "2016-08-25T00:00:00JST",
-    "dateModified": "2016-08-25T00:00:00JST",
-    "author": {
-      "@type": "Person",
-      "name": "Edgar&#39;s Data Lab"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Edgar&#39;s Data Lab",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "/images/logo.png",
-        "width": 600,
-        "height": 60
-      }
-    },
-    "description": "The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
-The plan is to:
-Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command"
-  }
-</script>
-
-
-    <link href="/css/styles.css" rel="stylesheet">
-    
-
-  </head>
-
-  <body>
-    
-    
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-108242418-1', 'auto');
-ga('send', 'pageview');
-</script>
-
-    
-
-    <header class="l-header">
-      <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Edgar&#39;s Data Lab</a>
-          </div>
-
-          
-          <div id="navbar" class="collapse navbar-collapse">
-            
-            <ul class="nav navbar-nav navbar-right">
-              
-              
-              <li><a href="https://github.com/edgararuiz/">GitHub</a></li>
-              
-              
-              
-              <li><a href="https://www.linkedin.com/in/edgararuiz/">LinkedIn</a></li>
-              
-              
-              
-              <li><a href="https://twitter.com/theotheredgar/">Twitter</a></li>
-              
-              
-            </ul>
-            
-          </div>
-          
-
-        </div>
-      </nav>
-    </header>
-
-    <main>
-      <div class="container">
-        
-<div class="row">
-  <div class="col-md-9">
-
-
-    <article class="single">
-  <header>
-    
-    <h1 class="title">Publish to a Shiny Server</h1>
-    
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2016-08-25T00:00:00JST">Aug 25, 2016</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="/post/">post</a></li>
-      
-    </ul>
-
-    
-  </header>
-
-  
-
-  <div class="article-body"><p>The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using <a href="https://help.ubuntu.com/lts/serverguide/samba.html">Samba</a>, we will create a shared folder inside the RStudio server user that maps directly to the <em>shiny-server</em> folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.</p>
-<p>The plan is to:</p>
-<ol style="list-style-type: decimal">
-<li>Create a user in the Shiny and RStudio server with the same name and password</li>
-<li>Install and configure the Samba <em>server</em> in the Shiny server</li>
-<li>Install and configure the Samba <em>client</em> in the RStudio server</li>
-<li>Point the <em>shiny-server</em> folder to a local folder in the RStudio server’s user</li>
-</ol>
-<div id="in-the-shiny-server" class="section level2">
-<h2>In the Shiny server</h2>
-<ul>
-<li>Open a new terminal session in the Shiny Server</li>
-<li><p>We’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command</p>
-<pre class="bash"><code>sudo adduser shiny-user
-sudo usermod -aG sudo shiny-user
-sudo chown shiny-user /srv/shiny-server/
-sudo chgrp sudo /srv/shiny-server/</code></pre></li>
-<li><p>Install Samba</p>
-<pre class="bash"><code>sudo apt-get install samba
-sudo smbpasswd -a shiny-user [typed password twice]</code></pre></li>
-<li><p>Open the <em>smb.conf</em> file for editing</p>
-<pre class="bash"><code>sudo nano /etc/samba/smb.conf</code></pre></li>
-<li><p>Add the following lines at the end of the <em>smb.conf</em> file:</p>
-<pre class="bash"><code>[shiny-server]
-comment = Shiny Server Share
-path=/srv/shiny-server/
-browsable = yes
-valid users = shiny-user
-read only = no</code></pre></li>
-<li>Close the file by typing CRTL+X, then Y and enter</li>
-<li><p>Restart the Samba server</p>
-<pre class="bash"><code>sudo service smbd restart</code></pre>
-<h2 id="in-the-rstudio-server">In the RStudio server</h2></li>
-<li>Start a terminal session in the ‘client’ RStudio Server</li>
-<li><p>Create the new user</p>
-<pre class="bash"><code>sudo adduser shiny-user</code></pre></li>
-<li>In a web browser session, navigate to the RStudio server and log on as ‘shiny-user’</li>
-<li>Create a folder called <em>shiny-server</em></li>
-<li>Switch back to the terminal session in the RStudio server</li>
-<li><p>Install the Samba client</p>
-<pre class="bash"><code>sudo apt-get install cifs-utils</code></pre></li>
-<li><p>Open the <em>fstab</em> file for editing. This file contains the necessary information to automate the process of mounting shares</p>
-<pre class="bash"><code>sudo nano /etc/fstab</code></pre></li>
-<li><p>Add the following lines at the end of the file</p>
-<pre class="bash"><code>//[ Shiny server&#39;s Internal IP Address]/shiny-server  /home/shiny-user/shiny-server  cifs  username=shiny-user,password=shiny-user</code></pre></li>
-<li>Close the file by typing CRTL+X, then Y and enter</li>
-<li><p>‘Mount’ the share, which means that the internal folder now points to the folder in the external Shiny server</p>
-<pre class="bash"><code>sudo mount -a</code></pre></li>
-<li>Go back to the web browser that has the RStudio session</li>
-<li>Click on the <em>shiny-server</em> folder. If there were any previously published apps in the Shiny server, then they should show up in the this folder now.</li>
-<li>To confirm that the permissions are correct, create a new Shiny app, called server_test inside the <strong>shiny-server</strong> folder</li>
-<li><p>Navigate to your new app by going to: <a href="http://MY_PUBLIC_DNS:3838/server_test" class="uri">http://MY_PUBLIC_DNS:3838/server_test</a></p></li>
-</ul>
-</div>
-</div>
-
-  <footer class="article-footer">
-    
-    
-    
-    <section class="bordered">
-      <header>
-        <div class="panel-title">CATEGORIES</div>
-      </header>
-      <div>
-        <ul class="p-terms">
-          
-          <li><a href="/categories/r-admins/">R Admins</a></li>
-          
-          <li><a href="/categories/how-to-guide/">How-to guide</a></li>
-          
-          <li><a href="/categories/server-setup/">Server setup</a></li>
-          
+<div class="nav-panel">
+    <nav>
+        <ul>
+            <li class="tag"><a href="#"><i class="icon fa fa-chevron-right" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="icon fa fa-star" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="icon fa fa-dot-circle-o" aria-hidden="true"></i></a></li>
         </ul>
-      </div>
-    </section>
-    
-    
-    
-    <section class="bordered">
-      <header>
-        <div class="panel-title">TAGS</div>
-      </header>
-      <div>
-        <ul class="p-terms">
-          
-          <li><a href="/tags/r/">R</a></li>
-          
-          <li><a href="/tags/shiny-server/">Shiny Server</a></li>
-          
-          <li><a href="/tags/rstudio-server/">RStudio Server</a></li>
-          
-          <li><a href="/tags/samba/">Samba</a></li>
-          
-          <li><a href="/tags/ubuntu/">Ubuntu</a></li>
-          
-        </ul>
-      </div>
-    </section>
-    
-    
-  </footer>
-
-</article>
-
-
-    
-  </div>
-
-  <div class="col-md-3">
-    
-<aside class="l-sidebar">
-
-  
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">
-        
-         <i class="fa fa-folder" aria-hidden="true"></i> 
-        <small>Top 10 categories</small>
-     </div>
-    </div>
-    <div class="list-group">
-      
-      <a href="/categories/how-to-guide" class="list-group-item">
-        <small>How to guide</small>
-      </a>
-      
-      <a href="/categories/r-admins" class="list-group-item">
-        <small>R admins</small>
-      </a>
-      
-      <a href="/categories/server-setup" class="list-group-item">
-        <small>Server setup</small>
-      </a>
-      
-      <a href="/categories/data-analysis" class="list-group-item">
-        <small>Data analysis</small>
-      </a>
-      
-      <a href="/categories/visualization" class="list-group-item">
-        <small>Visualization</small>
-      </a>
-      
-      <a href="/categories/presentation" class="list-group-item">
-        <small>Presentation</small>
-      </a>
-      
-    </div>
-  </section>
-  
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">
-         <i class="fa fa-tag" aria-hidden="true"></i> 
-        
-        <small>Top 10 tags</small>
-     </div>
-    </div>
-    <div class="list-group">
-      
-      <a href="/tags/r" class="list-group-item">
-        <small>R</small>
-      </a>
-      
-      <a href="/tags/ggplot2" class="list-group-item">
-        <small>Ggplot2</small>
-      </a>
-      
-      <a href="/tags/rstudio-server" class="list-group-item">
-        <small>Rstudio server</small>
-      </a>
-      
-      <a href="/tags/arima" class="list-group-item">
-        <small>Arima</small>
-      </a>
-      
-      <a href="/tags/banking" class="list-group-item">
-        <small>Banking</small>
-      </a>
-      
-      <a href="/tags/shiny-server" class="list-group-item">
-        <small>Shiny server</small>
-      </a>
-      
-      <a href="/tags/twitter" class="list-group-item">
-        <small>Twitter</small>
-      </a>
-      
-      <a href="/tags/aws" class="list-group-item">
-        <small>Aws</small>
-      </a>
-      
-      <a href="/tags/databases" class="list-group-item">
-        <small>Databases</small>
-      </a>
-      
-      <a href="/tags/ec2" class="list-group-item">
-        <small>Ec2</small>
-      </a>
-      
-    </div>
-  </section>
-  
-
-</aside>
-
-
-  </div>
+    </nav>
 </div>
 
-      </div>
-    </main>
+<div class="container">
+    <div class="tile-container">
+        <a class="tile tile-link" href="#one">
+            <div class="tile-box">One</div>
+            <div class="tile-title">One</div>
+        </a>
+        <a class="tile tile-link" href="#two">
+            <div class="tile-box">Two</div>
+            <div class="tile-title">Two</div>
+        </a>
+        <a class="tile tile-link" href="#">
+            <div class="tile-box">Three</div>
+            <div class="tile-title">Three</div>
+        </a>
+        <a class="tile tile-link" href="#">
+            <div class="tile-box">Four</div>
+            <div class="tile-title">Four</div>
+        </a>
+    </div>
+</div>
 
-    <footer class="l-footer">
-      <div class="container">
-        <p><span class="h-logo">&copy; Edgar&#39;s Data Lab</span></p>
-        <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-        </aside>
-      </div>
-    </footer>
-
-    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-  </body>
+</body>
+<link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+<script src="js/slate.js"></script>
 </html>
-

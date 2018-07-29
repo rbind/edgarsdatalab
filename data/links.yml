@@ -1,0 +1,134 @@
+tiles:
+
+- 
+  name: 'Moving average with R'
+  date: 2018-07-19
+  summary: 'Business value with R to calculate and plot moving average'
+  url: 'https://www.linkedin.com/pulse/business-value-using-r-moving-average-edgar-ruiz/'
+  img: 'https://media.licdn.com/dms/image/C4E12AQE4wTTIbKkDtw/article-inline_image-shrink_1500_2232/0?e=2132524800&v=beta&t=EIcqLSmxrXVXJ2ESLkU2uOyxFefBBW92h5etwWQ93VQ'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Comunicando resultados con R'
+  date: 2018-07-12
+  summary: 'Webinar con enfoque en RMarkdown y Shiny'
+  url: 'https://www.rstudio.com/resources/videos/comunicando-resultados-con-r/'
+  img: 'images/comunicando.png'
+  tags: ['webinars', 'presentations']
+  
+- 
+  name: 'Ciencia de Datos con R'
+  date: 2018-05-23
+  summary: 'Introduciendo la fosa del exito en R'
+  url: 'https://www.rstudio.com/resources/videos/comunicando-resultados-con-r/'
+  img: 'images/el-tidyverse.png'
+  tags: ['webinars', 'presentations']  
+  
+- 
+  name: 'Plotting a trend line'
+  date: 2018-04-30
+  summary: 'The article focuses on a step-by-step evolution of building a trend line plot'
+  url: 'https://www.linkedin.com/pulse/business-value-using-r-plotting-trend-line-edgar-ruiz/'
+  img: 'https://media.licdn.com/media/gcrc/dms/image/C4E12AQGdewea1aX4AA/article-cover_image-shrink_720_1280/0?e=2132524800&v=beta&t=JdLBROs7NqaNVPCpKavDrChUKqPUZHTw0FnE_6e9ez0'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Instalar R y RStudio en Windows'
+  date: 2018-04-22
+  summary: 'Este es un articulo corto demonstrando como instalar R y RStudio'
+  url: 'https://www.linkedin.com/pulse/como-instalar-r-y-rstudio-en-windows-edgar-ruiz/'
+  img: 'https://media.licdn.com/media/gcrc/dms/image/C4E12AQGQwZG857fMTQ/article-cover_image-shrink_720_1280/0?e=2132524800&v=beta&t=xCV3SgBCHGKQ3TFiSzwhYEYMw07J4aI51FKDlOG-5io'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Installing R and RStudio for Windows'
+  date: 2018-04-22
+  summary: 'Short how-to article will cover how to perform the installation of R & RStudio'
+  url: 'https://www.linkedin.com/pulse/installing-r-rstudio-windows-edgar-ruiz/'
+  img: 'https://media.licdn.com/dms/image/C4E12AQEay9rOylq4cQ/article-inline_image-shrink_1500_2232/0?e=2132524800&v=beta&t=pAsJqK8VDCrcyULyMquYKxu0H2iMUQX1qf3lJ7VB6hc'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Best Practices for DBs and R'
+  date: 2018-03-28
+  summary: 'Using R to prepare, visualize, & share data from DBs.'
+  url: 'https://www.rstudio.com/resources/videos/best-practices-for-working-with-databases-webinar/'
+  img: 'images/practices.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Enterprise-ready dashboards with Shiny and databases'
+  date: 2017-09-20
+  summary: 'Article and demo to how to create DBs backed dashboards in R'
+  url: 'https://rviews.rstudio.com/2017/09/20/dashboards-with-r-and-databases/'
+  img: 'https://rviews.rstudio.com/post/2017-09-12-dashboards-with-r-and-databases/main.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Understanding sparklyr deployment modes'
+  date: 2017-08-30
+  summary: 'Understanding sparklyr deployment modes'
+  url: 'https://www.rstudio.com/resources/webinars/understanding-sparklyr-deployment-modes/'
+  img: 'images/understanding.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Introducing an R interface for Apache Spark'
+  date: 2017-08-09
+  summary: 'Introducing an R interface for Apache Spark'
+  url: 'https://www.rstudio.com/resources/webinars/introducing-an-r-interface-for-apache-spark/'
+  img: 'images/intro-sparklyr.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'A Nonlinear World'
+  date: 2017-06-17
+  summary: 'The article has nice examples that help explain how even simple'
+  url: 'https://www.linkedin.com/pulse/installing-r-rstudio-windows-edgar-ruiz/'
+  img: 'https://media.licdn.com/dms/image/C5612AQHazuSIYI3dRg/article-inline_image-shrink_1500_2232/0?e=2132524800&v=beta&t=Nv531hpJezn4-RpZctp4A4-25LlhBwsg9S1NT2hxtfU'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Visualizations with R and Databases'
+  date: 2017-08-16
+  summary: 'Strategies to plot data from DBs in R'
+  url: 'https://rviews.rstudio.com/2017/08/16/visualizations-with-r-and-databases/'
+  img: 'https://rviews.rstudio.com/post/2017-08-14-database-visualize_files/figure-html/unnamed-chunk-4-1.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'Databases Using R'
+  date: 2017-05-17
+  summary: 'Current state and future of analyzing data in DBs with R'
+  url: 'https://rviews.rstudio.com/2017/05/17/databases-using-r/'
+  img: 'https://rviews.rstudio.com/post/2017-05-11-databases-using-r_files/better.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: 'R Markdown for the Enterprise'
+  date: 2017-01-25
+  summary: 'A review of how to use RMarkdown for both analysis and reporting'
+  url: 'https://rviews.rstudio.com/2017/01/25/r-markdown-for-the-enterprise/'
+  img: 'https://rviews.rstudio.com/post/2017-01-23-r-markdown-for-the-enterprise_files/rmarkdown.png'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: '16 yrs of Banking Data'
+  date: 2016-03-06
+  summary: 'Historical analysis of FDIC deposit data across the country'
+  url: 'https://www.linkedin.com/pulse/infographic-16-years-banking-dataand-beyond-edgar-ruiz/'
+  img: 'https://media.licdn.com/media/gcrc/dms/image/C5612AQHLX1cAnOsGrg/article-cover_image-shrink_423_752/0?e=2132524800&v=beta&t=ApcCi9yyOK7BCQyxeq4EdPfklzf3YREX6SOAHzFR4Yw'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+- 
+  name: '5 things I learned from open banking data'
+  date: 2016-02-10
+  summary: 'Analysis of FDIC deposit data across the country'
+  url: 'https://www.linkedin.com/pulse/5-things-i-learned-from-open-banking-data-edgar-ruiz/'
+  img: 'https://media.licdn.com/dms/image/C5612AQHl-lWBDbM6IQ/article-inline_image-shrink_1500_2232/0?e=2132524800&v=beta&t=YfKGJUFGzVdW3eQnXv6tfynR_FEmoZVOtNwptkRgDBU'
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+
+
+
+  
+  
