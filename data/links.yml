@@ -3,6 +3,7 @@ tiles:
 - 
   name: 'Moving average with R'
   date: 2018-07-19
+  bg_color: '#ffffcc'
   summary: 'Business value with R to calculate and plot moving average'
   url: 'https://www.linkedin.com/pulse/business-value-using-r-moving-average-edgar-ruiz/'
   img: 'https://media.licdn.com/dms/image/C4E12AQE4wTTIbKkDtw/article-inline_image-shrink_1500_2232/0?e=2132524800&v=beta&t=EIcqLSmxrXVXJ2ESLkU2uOyxFefBBW92h5etwWQ93VQ'
@@ -54,7 +55,7 @@ tiles:
   summary: 'Using R to prepare, visualize, & share data from DBs.'
   url: 'https://www.rstudio.com/resources/videos/best-practices-for-working-with-databases-webinar/'
   img: 'images/practices.png'
-  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization', 'webinars']
 
 - 
   name: 'Enterprise-ready dashboards with Shiny and databases'
@@ -70,7 +71,7 @@ tiles:
   summary: 'Understanding sparklyr deployment modes'
   url: 'https://www.rstudio.com/resources/webinars/understanding-sparklyr-deployment-modes/'
   img: 'images/understanding.png'
-  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization', 'webinars']
 
 - 
   name: 'Introducing an R interface for Apache Spark'
@@ -78,7 +79,7 @@ tiles:
   summary: 'Introducing an R interface for Apache Spark'
   url: 'https://www.rstudio.com/resources/webinars/introducing-an-r-interface-for-apache-spark/'
   img: 'images/intro-sparklyr.png'
-  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization', 'webinars']
 
 - 
   name: 'A Nonlinear World'
@@ -127,7 +128,6 @@ tiles:
   url: 'https://www.linkedin.com/pulse/5-things-i-learned-from-open-banking-data-edgar-ruiz/'
   img: 'https://media.licdn.com/dms/image/C5612AQHl-lWBDbM6IQ/article-inline_image-shrink_1500_2232/0?e=2132524800&v=beta&t=YfKGJUFGzVdW3eQnXv6tfynR_FEmoZVOtNwptkRgDBU'
   tags: ['business', 'dplyr', 'ggplot2', 'visualization']
-
 
 
   

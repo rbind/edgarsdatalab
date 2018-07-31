@@ -6,7 +6,19 @@
       <link rel="stylesheet" href="css/homepage.css">
   </head>
 
-  <h1>{{ .Title }}</h1>
+  <div class="top-panel">
+    <table border=0, style="width:100%">
+      <th>
+        <td><h1>{{ .Title }}</h1></td>
+        <td>
+          <a href="www.google.com">
+            <i class="icon fa fa-github" aria-hidden="true"></i>
+          </a>
+        </td>
+      </th>
+    </table>
+  </div>
+
 
   <body{{ if .Site.Params.BackgroundStyle }} style='background: {{ .Site.Params.BackgroundStyle | safeCSS }};'{{ end }}
 {{- if .Site.Params.BackgroundImages }} data-backgrounds='{{ range .Site.Params.BackgroundImages }}{{ . }},{{ end }}'{{- end }}>

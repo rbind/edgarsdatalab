@@ -1,47 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>How to Guide on Edgar&#39;s Data Lab</title>
-    <link>/categories/how-to-guide/</link>
-    <description>Recent content in How to Guide on Edgar&#39;s Data Lab</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/how-to-guide/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Setup an RStudio Server in Ubuntu</title>
-      <link>/2017/11/24/setup-an-rstudio-server-in-ubuntu/</link>
-      <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/11/24/setup-an-rstudio-server-in-ubuntu/</guid>
-      <description>A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of this article.
-One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.
-Core setupInstall RUbuntu defaults to an older version of R.</description>
-    </item>
-    
-    <item>
-      <title>Publish to a Shiny Server</title>
-      <link>/2016/08/25/publish-to-a-shiny-server/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/publish-to-a-shiny-server/</guid>
-      <description>The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
-The plan is to:
-Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command</description>
-    </item>
-    
-    <item>
-      <title>Setup a Shiny Server in AWS</title>
-      <link>/2016/08/25/setup-a-shiny-server-in-aws/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/setup-a-shiny-server-in-aws/</guid>
-      <description>The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:
-Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.</description>
-    </item>
-    
-  </channel>
-</rss>

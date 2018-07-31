@@ -1,24 +1,38 @@
 .tile-subtitle{
   width:188px;
-  height:30px;
+  height:40px;
   font-size:10px;
-  color:#fff;
+  color:#666;
   text-overflow:ellipsis;
   transition:color .3s;
   word-wrap: break-word;
-  
+
 }
 
 .tile-date{
+  font-size:10px;
   height:20px;
-  width:188px;
-  font-size:9px;
-  color:#fff;
+  color:#666;
 }
 
+.tile-name{
+  padding-top:5px;
+  padding-bottom:5px;
+  padding-left: 5px;
+  padding-right:5px;
+  font-size:14px;
+  color:#333;
+}
 
 h1{
   font-size:24px;
   color:#fff;
   padding-left:0;
 }
+
+.top-panel{
+  height:50px;
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%}

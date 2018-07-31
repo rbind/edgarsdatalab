@@ -1,102 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on Edgar&#39;s Data Lab</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on Edgar&#39;s Data Lab</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Setup an RStudio Server in Ubuntu</title>
-      <link>/2017/11/24/setup-an-rstudio-server-in-ubuntu/</link>
-      <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/11/24/setup-an-rstudio-server-in-ubuntu/</guid>
-      <description>A concise step-by-step guide to setup a Rstudio Server in Ubuntu Linux. The assumption is made that the server is already setup. There are instructions on how to setup a server in Amazon AWS in the first section of this article.
-One of the main objectives of this short how-to is to keep a quick list of Linux dependencies based on the R packages that we plan to install.
-Core setupInstall RUbuntu defaults to an older version of R.</description>
-    </item>
-    
-    <item>
-      <title>Databases using R - ODSC West - Materials</title>
-      <link>/2017/11/04/databases-using-r---odsc-west---materials/</link>
-      <pubDate>Sat, 04 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/11/04/databases-using-r---odsc-west---materials/</guid>
-      <description>Here is the link to the repo containing the materials from my talk at ODSC West 2017. It is titled “Databases using R”.
-Link: https://github.com/edgararuiz/odsc-2017</description>
-    </item>
-    
-    <item>
-      <title>Intro to TensorFlow in R</title>
-      <link>/2017/10/22/intro-to-tensorflow-in-r/</link>
-      <pubDate>Sun, 22 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/10/22/intro-to-tensorflow-in-r/</guid>
-      <description>TensorFlow is usually associated with neural networks and advanced Machine Learning. But just like R, it can also be used to create less complex models that can serve as a great introduction for new users, like me.
-Training wheelsTensorFlow is a very powerful and flexible architecture. It provides the building blocks to create and fit basically any machine learning algorithm. But even a simple linear regression model has to be built “from scratch” using layers and estimators in TensorFlow.</description>
-    </item>
-    
-    <item>
-      <title>Sentiment analysis using tidytext</title>
-      <link>/2017/09/04/sentiment-analysis-using-tidytext/</link>
-      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/09/04/sentiment-analysis-using-tidytext/</guid>
-      <description>Quick introGetting familiar with the new tidytext package was a great weekend project. This example follows the structure of the Introduction to tidytext article by the authors of the package, Julia Silge and David Robinson.
-The source of the text for this example are tweets. More specifically, tweets with the rstats hashtag. This project will also be an attempt to learn something about the community.
-Twitter data importThe twitterR package opens the Twitter API to R users.</description>
-    </item>
-    
-    <item>
-      <title>Publish to a Shiny Server</title>
-      <link>/2016/08/25/publish-to-a-shiny-server/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/publish-to-a-shiny-server/</guid>
-      <description>The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
-The plan is to:
-Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command</description>
-    </item>
-    
-    <item>
-      <title>Setup a Shiny Server in AWS</title>
-      <link>/2016/08/25/setup-a-shiny-server-in-aws/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/setup-a-shiny-server-in-aws/</guid>
-      <description>The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:
-Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.</description>
-    </item>
-    
-    <item>
-      <title>[Infographic] 16 years of Banking Data…and beyond</title>
-      <link>/2016/08/25/infographic-16-years-of-banking-dataand-beyond/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/infographic-16-years-of-banking-dataand-beyond/</guid>
-      <description>Originaly published on LinkedIn, March 6 2016
- For the full size version click here
-The Data – 1.5 million rows across 16 files were brought into the analysis. Each file contained a specific year and each row a specific branch.
-The Math – For the forecasting, the model methodology used was ARIMA (Autoregressive Integrated Moving Average). This kind of model works well for time series analysis. To see the full R Markup report describing how each model was chosen click here.</description>
-    </item>
-    
-    <item>
-      <title>5 things I learned from open banking data</title>
-      <link>/2016/08/24/5-things-i-learned-from-open-banking-data/</link>
-      <pubDate>Wed, 24 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/24/5-things-i-learned-from-open-banking-data/</guid>
-      <description>Original published on LinkedIn, February 10 2016
-Banks and other financial institutions submit to the FDIC a report of all of the money held for deposit at each of their branches. A compilation of the reports from each bank is available as a single dataset on the FDIC’s website.
-Here are 5 insights from analyzing the most recent dataset:
-In 2015, $10.6 trillion dollars in total deposits were reported – This was the first eye opener for me; this number is a 1 followed by 13 zeroes.</description>
-    </item>
-    
-  </channel>
-</rss>

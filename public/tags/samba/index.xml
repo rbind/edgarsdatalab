@@ -1,26 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Samba on Edgar&#39;s Data Lab</title>
-    <link>/tags/samba/</link>
-    <description>Recent content in Samba on Edgar&#39;s Data Lab</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2016 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/samba/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Publish to a Shiny Server</title>
-      <link>/2016/08/25/publish-to-a-shiny-server/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/publish-to-a-shiny-server/</guid>
-      <description>The following method sets up a single user in the RStudio server that also has ‘write’ access in the Shiny server. Using Samba, we will create a shared folder inside the RStudio server user that maps directly to the shiny-server folder inside the Shiny server. The assumption is made that the ‘client’ RStudio server is running an Ubuntu (Debian) distribution.
-The plan is to:
-Create a user in the Shiny and RStudio server with the same name and passwordInstall and configure the Samba server in the Shiny serverInstall and configure the Samba client in the RStudio serverPoint the shiny-server folder to a local folder in the RStudio server’s userIn the Shiny serverOpen a new terminal session in the Shiny ServerWe’ll create the new user, give it ‘admin’ access and then we remove the need for it to use the ‘sudo’ command</description>
-    </item>
-    
-  </channel>
-</rss>

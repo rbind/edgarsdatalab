@@ -1,25 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Ec2 on Edgar&#39;s Data Lab</title>
-    <link>/tags/ec2/</link>
-    <description>Recent content in Ec2 on Edgar&#39;s Data Lab</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2016 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/ec2/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Setup a Shiny Server in AWS</title>
-      <link>/2016/08/25/setup-a-shiny-server-in-aws/</link>
-      <pubDate>Thu, 25 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/08/25/setup-a-shiny-server-in-aws/</guid>
-      <description>The following, is a step-by-step guide to setup a Shiny Server in AWS along with a method that makes publishing apps easier. The plan is to:
-Setup a server, or EC2 instance, in AWSInstall R, Shiny Server and RStudio ServerPre-install dependencies packagesPublish a test appSetup the EC2 Instances (Servers) in AWSThe purpose of this section is to provide specific instructions on how to setup one EC2 instance in AWS.</description>
-    </item>
-    
-  </channel>
-</rss>
