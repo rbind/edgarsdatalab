@@ -70,4 +70,8 @@ name = "Presentations"
 tag = "presentations"
 icon = "group"
 
+[[ params.nav ]]
+name = "Español"
+tag = "espanol"
+icon = "group"
 

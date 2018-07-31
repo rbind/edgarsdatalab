@@ -15,7 +15,7 @@ tiles:
   summary: 'Webinar con enfoque en RMarkdown y Shiny'
   url: 'https://www.rstudio.com/resources/videos/comunicando-resultados-con-r/'
   img: 'images/comunicando.png'
-  tags: ['webinars', 'presentations']
+  tags: ['webinars', 'presentations', 'espanol']
   
 - 
   name: 'Ciencia de Datos con R'
@@ -23,7 +23,7 @@ tiles:
   summary: 'Introduciendo la fosa del exito en R'
   url: 'https://www.rstudio.com/resources/videos/comunicando-resultados-con-r/'
   img: 'images/el-tidyverse.png'
-  tags: ['webinars', 'presentations']  
+  tags: ['webinars', 'presentations', 'espanol']  
   
 - 
   name: 'Plotting a trend line'
@@ -39,7 +39,7 @@ tiles:
   summary: 'Este es un articulo corto demonstrando como instalar R y RStudio'
   url: 'https://www.linkedin.com/pulse/como-instalar-r-y-rstudio-en-windows-edgar-ruiz/'
   img: 'https://media.licdn.com/media/gcrc/dms/image/C4E12AQGQwZG857fMTQ/article-cover_image-shrink_720_1280/0?e=2132524800&v=beta&t=xCV3SgBCHGKQ3TFiSzwhYEYMw07J4aI51FKDlOG-5io'
-  tags: ['business', 'dplyr', 'ggplot2', 'visualization']
+  tags: ['business', 'dplyr', 'ggplot2', 'visualization', 'espanol']
 
 - 
   name: 'Installing R and RStudio for Windows'
